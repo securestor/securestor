@@ -1,0 +1,92 @@
+.replication-node-management {
+  padding: 0;
+}
+
+.replication-node-management .section-header {
+  margin-bottom: 24px;
+}
+
+.replication-node-management h3 {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.replication-node-management p {
+  color: #666;
+  font-size: 13px;
+}
+
+.replication-node-management .node-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.replication-node-management .btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.replication-node-management .btn-primary {
+  background: #0066cc;
+  color: white;
+}
+
+.replication-node-management .btn-primary:hover:not(:disabled) {
+  background: #0052a3;
+}
+
+.replication-node-management .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.replication-node-management .empty-state {
+  padding: 40px;
+  text-align: center;
+  background: #f9f9f9;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  color: #999;
+}
+
+.replication-node-management .node-info-box {
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.replication-node-management .node-info-box h4 {
+  margin-bottom: 12px;
+  color: #f57c00;
+}
+
+.replication-node-management .node-info-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.replication-node-management .node-info-box li {
+  padding: 6px 0;
+  color: #333;
+  font-size: 13px;
+}
+
+.replication-node-management .node-info-box strong {
+  color: #222;
+}
+
+@media (max-width: 768px) {
+  .replication-node-management .node-actions {
+    flex-wrap: wrap;
+  }
+}

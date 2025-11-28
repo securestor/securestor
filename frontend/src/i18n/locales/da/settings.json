@@ -1,0 +1,68 @@
+{
+  "title": "Indstillinger",
+  "general": {
+    "title": "Generelle indstillinger",
+    "language": "Sprog",
+    "timezone": "Tidszone",
+    "dateFormat": "Datoformat",
+    "timeFormat": "Tidsformat",
+    "theme": "Tema",
+    "lightMode": "Lys tilstand",
+    "darkMode": "Mørk tilstand",
+    "auto": "Automatisk"
+  },
+  "security": {
+    "title": "Sikkerhedsindstillinger",
+    "changePassword": "Skift adgangskode",
+    "currentPassword": "Nuværende adgangskode",
+    "newPassword": "Ny adgangskode",
+    "confirmPassword": "Bekræft adgangskode",
+    "encryption": "Kryptering",
+    "twoFactorAuth": "To-faktor autentificering",
+    "apiKeys": "API-nøgler",
+    "sessions": "Sessioner",
+    "activeSessions": "Aktive sessioner",
+    "terminateSession": "Afslut session",
+    "accessControl": "Adgangskontrol"
+  },
+  "notifications": {
+    "title": "Notifikationsindstillinger",
+    "emailNotifications": "E-mail-notifikationer",
+    "pushNotifications": "Push-notifikationer",
+    "securityAlerts": "Sikkerhedsalarmer",
+    "scanResults": "Scanningsresultater",
+    "complianceAlerts": "Compliance-alarmer",
+    "systemUpdates": "Systemopdateringer"
+  },
+  "tenant": {
+    "title": "Lejerstyring",
+    "tenantName": "Tenant-navn",
+    "tenantId": "Tenant-ID",
+    "plan": "Plan",
+    "billingInfo": "Faktureringsinformation",
+    "quota": "Kvote",
+    "usage": "Forbrug",
+    "limits": "Grænser"
+  },
+  "advanced": {
+    "title": "Avancerede indstillinger",
+    "caching": "Caching",
+    "replication": "Replikering",
+    "storageBackend": "Storage-backend",
+    "retention": "Opbevaring",
+    "logLevel": "Logniveau",
+    "debugMode": "Fejlsøgningstilstand"
+  },
+  "actions": {
+    "saveSettings": "Gem indstillinger",
+    "resetToDefault": "Nulstil til standard",
+    "exportSettings": "Eksporter indstillinger",
+    "importSettings": "Importer indstillinger"
+  },
+  "messages": {
+    "settingsSaved": "Indstillinger gemt succesfuldt",
+    "settingsFailed": "Kunne ikke gemme indstillinger",
+    "passwordChanged": "Adgangskode ændret succesfuldt",
+    "passwordFailed": "Kunne ikke ændre adgangskode"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "page": {
+    "title": "Audit Logs",
+    "description": "Monitor system activities and security events"
+  },
+  "buttons": {
+    "filters": "Filters",
+    "refresh": "Refresh",
+    "applyFilters": "Apply Filters",
+    "clearAll": "Clear All",
+    "clearFilters": "Clear Filters",
+    "previous": "Previous",
+    "next": "Next",
+    "view": "View"
+  },
+  "stats": {
+    "totalLogs": "Total Logs",
+    "successfulEvents": "Successful Events",
+    "failedEvents": "Failed Events",
+    "eventTypes": "Event Types",
+    "successRate": "success rate"
+  },
+  "filters": {
+    "userId": "User ID",
+    "eventType": "Event Type",
+    "action": "Action",
+    "status": "Status",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "allTypes": "All Types",
+    "allActions": "All Actions",
+    "allStatus": "All Status",
+    "success": "Success",
+    "failed": "Failed",
+    "placeholder": {
+      "userId": "Filter by user ID"
+    }
+  },
+  "table": {
+    "timestamp": "Timestamp",
+    "event": "Event",
+    "user": "User",
+    "action": "Action",
+    "status": "Status",
+    "details": "Details"
+  },
+  "status": {
+    "success": "Success",
+    "failed": "Failed"
+  },
+  "messages": {
+    "loading": "Loading audit logs...",
+    "errorLoading": "Error Loading Audit Logs",
+    "noLogsFound": "No audit logs found",
+    "noLogsFiltered": "Try adjusting your filters to see more results.",
+    "noLogsDefault": "Audit logs will appear here as system activities occur."
+  },
+  "pagination": {
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results"
+  },
+  "modal": {
+    "title": "Audit Log Details",
+    "id": "ID",
+    "timestamp": "Timestamp",
+    "eventType": "Event Type",
+    "user": "User",
+    "action": "Action",
+    "resourceType": "Resource Type",
+    "resourceId": "Resource ID",
+    "ipAddress": "IP Address",
+    "status": "Status",
+    "errorMessage": "Error Message",
+    "metadata": "Metadata"
+  }
+}

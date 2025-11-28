@@ -1,0 +1,26 @@
+{
+  "input": {
+    "artifact": {
+      "id": "123",
+      "name": "test-app",
+      "version": "1.0.0",
+      "type": "docker",
+      "size": 1048576
+    },
+    "vulnerabilities": {
+      "critical": 0,
+      "high": 1,
+      "medium": 3,
+      "low": 5
+    },
+    "scan_results": {
+      "malware_detected": false,
+      "license_compliance": "compliant",
+      "secrets_detected": false
+    },
+    "user": {
+      "id": "user-123",
+      "roles": ["developer"]
+    }
+  }
+}

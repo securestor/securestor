@@ -1,0 +1,71 @@
+{
+  "page": {
+    "title": "Cache-styring",
+    "description": "Vis og administrer cachede artefakter på tværs af alle cacheniveauer"
+  },
+  "stats": {
+    "l1Cache": "L1 Cache (Redis)",
+    "l2Cache": "L2 Cache (Disk)",
+    "l3Cache": "L3 Cache (Cloud)",
+    "databaseTracking": "Database Tracking",
+    "enabled": "Aktiveret",
+    "disabled": "Deaktiveret",
+    "pendingScans": "Afventende scanninger",
+    "quarantinedItems": "Elementer i karantæne",
+    "avgHitCount": "Gennemsnitligt træfferantal"
+  },
+  "filters": {
+    "allTypes": "Alle typer",
+    "maven": "Maven",
+    "npm": "npm",
+    "pypi": "PyPI",
+    "helm": "Helm",
+    "docker": "Docker",
+    "allLevels": "Alle niveauer",
+    "l1Redis": "L1 (Redis)",
+    "l2Disk": "L2 (Disk)",
+    "l3Cloud": "L3 (Cloud)"
+  },
+  "buttons": {
+    "refresh": "Opdater",
+    "evictUnused": "Fjern ubrugte",
+    "cleanupExpired": "Ryd udløbne",
+    "clearAll": "Ryd alle",
+    "previous": "Forrige",
+    "next": "Næste"
+  },
+  "table": {
+    "artifactPath": "Artefakt sti",
+    "type": "Type",
+    "cacheLevel": "Cache-niveau",
+    "size": "Størrelse",
+    "hits": "Træffere",
+    "lastAccessed": "Sidst tilgået",
+    "scanStatus": "Scanningsstatus",
+    "actions": "Handlinger"
+  },
+  "actions": {
+    "scan": "Scan artefakt",
+    "download": "Download artefakt",
+    "remove": "Fjern fra cache"
+  },
+  "messages": {
+    "loading": "Indlæser cache-elementer...",
+    "noItems": "Ingen cachede elementer fundet",
+    "page": "Side",
+    "of": "af",
+    "scanFailed": "Kunne ikke scanne",
+    "downloadFailed": "Kunne ikke downloade",
+    "deleteFailed": "Kunne ikke slette",
+    "confirmDelete": "Slet cachet element",
+    "confirmFlush": "Ryd ALLE cache? Dette kan ikke fortrydes!",
+    "flushSuccess": "Cache ryddet med succes",
+    "flushFailed": "Kunne ikke rydde cache",
+    "evictPrompt": "Slet elementer, der ikke er tilgået i hvor mange dage?",
+    "evictSuccess": "Fjernede med succes {{count}} cachede elementer",
+    "evictFailed": "Kunne ikke fjerne ubrugt cache",
+    "confirmCleanup": "Slet alle udløbne cachede elementer?",
+    "cleanupSuccess": "Fjernede med succes {{count}} udløbne elementer",
+    "cleanupFailed": "Kunne ikke rydde cache"
+  }
+}

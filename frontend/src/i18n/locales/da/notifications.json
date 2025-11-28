@@ -1,0 +1,51 @@
+{
+  "title": "Notifikationer",
+  "types": {
+    "security": "Sikkerhed",
+    "scan": "Scanning",
+    "compliance": "Compliance",
+    "system": "System",
+    "artifact": "Artefakt",
+    "alert": "Alarm",
+    "info": "Information"
+  },
+  "priorities": {
+    "critical": "Kritisk",
+    "high": "Høj",
+    "medium": "Mellem",
+    "low": "Lav"
+  },
+  "center": {
+    "title": "Notifikationscenter",
+    "markAllRead": "Marker alle som læst",
+    "clearAll": "Ryd alle",
+    "noNotifications": "Ingen notifikationer",
+    "unread": "{{count}} ulæst",
+    "unread_plural": "{{count}} ulæste",
+    "showUnread": "Vis ulæste",
+    "showAll": "Vis alle"
+  },
+  "preferences": {
+    "title": "Notifikationspræferencer",
+    "email": "E-mail-notifikationer",
+    "push": "Push-notifikationer",
+    "inApp": "In-app-notifikationer",
+    "securityAlerts": "Sikkerhedsalarmer",
+    "scanResults": "Scanningsresultater",
+    "complianceAlerts": "Compliance-alarmer",
+    "systemUpdates": "Systemopdateringer"
+  },
+  "actions": {
+    "markAsRead": "Marker som læst",
+    "markAsUnread": "Marker som ulæst",
+    "delete": "Slet",
+    "viewDetails": "Se detaljer",
+    "snooze": "Udsæt",
+    "dismiss": "Afvis"
+  },
+  "messages": {
+    "newNotification": "Ny notifikation",
+    "notificationDeleted": "Notifikation slettet",
+    "allMarkedRead": "Alle notifikationer markeret som læst"
+  }
+}

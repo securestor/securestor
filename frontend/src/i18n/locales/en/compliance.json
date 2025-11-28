@@ -1,0 +1,101 @@
+{
+  "page": {
+    "title": "Data Privacy & Policy Enforcement",
+    "description": "Comprehensive compliance management with data retention, legal holds, audit logs, and policy enforcement"
+  },
+  "title": "Compliance",
+  "subtitle": "Compliance management and auditing",
+  "tabs": {
+    "dashboard": "Compliance Dashboard",
+    "policies": "Data Retention Policies",
+    "legalHolds": "Legal Holds",
+    "erasure": "Data Erasure Requests",
+    "audit": "Audit Logs",
+    "policyEditor": "Policy Editor (OPA)",
+    "scheduler": "Automation Scheduler"
+  },
+  "status": {
+    "compliant": "Compliant",
+    "nonCompliant": "Non-Compliant",
+    "review": "Under Review",
+    "pending": "Pending",
+    "policyViolation": "Policy Violation",
+    "underLegalHold": "Under Legal Hold",
+    "gdprErasureRequested": "GDPR Erasure Requested",
+    "retentionExpired": "Retention Expired"
+  },
+  "policies": {
+    "title": "Policies",
+    "createPolicy": "Create Policy",
+    "editPolicy": "Edit Policy",
+    "deletePolicy": "Delete Policy",
+    "policyName": "Policy Name",
+    "policyType": "Policy Type",
+    "policyStatus": "Policy Status",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "audit": {
+    "title": "Audit Log",
+    "viewLog": "View Audit Log",
+    "exportLog": "Export Audit Log",
+    "action": "Action",
+    "user": "User",
+    "timestamp": "Timestamp",
+    "ipAddress": "IP Address",
+    "resource": "Resource",
+    "result": "Result"
+  },
+  "gdpr": {
+    "title": "GDPR Compliance",
+    "dataErasure": "Data Erasure",
+    "requestErasure": "Request Data Erasure",
+    "erasureRequested": "Erasure Requested",
+    "rightToAccess": "Right to Access",
+    "rightToPortability": "Right to Portability",
+    "dataSubject": "Data Subject"
+  },
+  "retention": {
+    "title": "Retention Policies",
+    "retentionPeriod": "Retention Period",
+    "expiryDate": "Expiry Date",
+    "expired": "Expired",
+    "active": "Active",
+    "setRetention": "Set Retention Policy"
+  },
+  "legalHold": {
+    "title": "Legal Hold",
+    "placeLegalHold": "Place Legal Hold",
+    "removeLegalHold": "Remove Legal Hold",
+    "reason": "Reason",
+    "caseName": "Case Name",
+    "holdActive": "Hold Active"
+  },
+  "report": {
+    "title": "Compliance Report",
+    "generate": "Generate Report",
+    "export": "Export Report",
+    "dateRange": "Date Range",
+    "complianceScore": "Compliance Score",
+    "summary": "Summary"
+  },
+  "messages": {
+    "loadDataFailed": "Failed to load compliance data",
+    "loadStatsFailed": "Failed to load compliance statistics",
+    "loadPoliciesFailed": "Failed to load compliance policies",
+    "loadLegalHoldsFailed": "Failed to load legal holds",
+    "loadErasureRequestsFailed": "Failed to load data erasure requests",
+    "loadAuditLogsFailed": "Failed to load audit logs",
+    "releaseLegalHoldFailed": "Failed to release legal hold",
+    "policyCreated": "Compliance policy created successfully",
+    "policyUpdated": "Policy updated successfully",
+    "policyDeleted": "Policy deleted successfully",
+    "legalHoldCreated": "Legal hold created successfully",
+    "legalHoldReleased": "Legal hold released successfully",
+    "erasureRequestCreated": "Data erasure request created successfully",
+    "erasureRequestApproved": "Data erasure request approved",
+    "erasureRequestRejected": "Data erasure request rejected",
+    "confirmDeletePolicy": "Are you sure you want to delete this policy?",
+    "confirmReleaseLegalHold": "Are you sure you want to release this legal hold?"
+  }
+}

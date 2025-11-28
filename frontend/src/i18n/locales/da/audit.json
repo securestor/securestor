@@ -1,0 +1,78 @@
+{
+  "page": {
+    "title": "Revisionslogfiler",
+    "description": "Overvåg systemaktiviteter og sikkerhedshændelser"
+  },
+  "buttons": {
+    "filters": "Filtre",
+    "refresh": "Opdater",
+    "applyFilters": "Anvend filtre",
+    "clearAll": "Ryd alle",
+    "clearFilters": "Ryd filtre",
+    "previous": "Forrige",
+    "next": "Næste",
+    "view": "Vis"
+  },
+  "stats": {
+    "totalLogs": "Samlede logfiler",
+    "successfulEvents": "Vellykkede begivenheder",
+    "failedEvents": "Mislykkede begivenheder",
+    "eventTypes": "Begivenhedstyper",
+    "successRate": "succesrate"
+  },
+  "filters": {
+    "userId": "Bruger-ID",
+    "eventType": "Begivenhedstype",
+    "action": "Handling",
+    "status": "Status",
+    "startDate": "Startdato",
+    "endDate": "Slutdato",
+    "allTypes": "Alle typer",
+    "allActions": "Alle handlinger",
+    "allStatus": "Alle statusser",
+    "success": "Succes",
+    "failed": "Mislykket",
+    "placeholder": {
+      "userId": "Filtrer efter bruger-ID"
+    }
+  },
+  "table": {
+    "timestamp": "Tidsstempel",
+    "event": "Begivenhed",
+    "user": "Bruger",
+    "action": "Handling",
+    "status": "Status",
+    "details": "Detaljer"
+  },
+  "status": {
+    "success": "Succes",
+    "failed": "Mislykket"
+  },
+  "messages": {
+    "loading": "Indlæser revisionslogfiler...",
+    "errorLoading": "Fejl ved indlæsning af revisionslogfiler",
+    "noLogsFound": "Ingen revisionslogfiler fundet",
+    "noLogsFiltered": "Prøv at justere dine filtre for at se flere resultater.",
+    "noLogsDefault": "Revisionslogfiler vises her, når systemaktiviteter forekommer."
+  },
+  "pagination": {
+    "showing": "Viser",
+    "to": "til",
+    "of": "af",
+    "results": "resultater"
+  },
+  "modal": {
+    "title": "Detaljer om revisionslogfil",
+    "id": "ID",
+    "timestamp": "Tidsstempel",
+    "eventType": "Begivenhedstype",
+    "user": "Bruger",
+    "action": "Handling",
+    "resourceType": "Ressourcetype",
+    "resourceId": "Ressource-ID",
+    "ipAddress": "IP-adresse",
+    "status": "Status",
+    "errorMessage": "Fejlmeddelelse",
+    "metadata": "Metadata"
+  }
+}

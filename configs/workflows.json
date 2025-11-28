@@ -1,0 +1,116 @@
+{
+  "version": "1.1",
+  "metadata": {
+    "description": "SecureStor artifact scanning workflow registry",
+    "maintainer": "securestor-core",
+    "last_updated": "2025-10-18T12:00:00Z"
+  },
+  "policies": {
+    "base_url": "http://opa:8181",
+    "default_ttl": 3600,
+    "evaluation_mode": "enforced" 
+  },
+  "default_execution": {
+    "strategy": "sequential",
+    "failure_policy": "continue",
+    "notify_on_violation": true,
+    "triggers": ["on_upload", "manual"]
+  },
+  "workflows": [
+    {
+      "name": "DockerWorkflow",
+      "artifact_types": ["docker", "oci"],
+      "scanners": [
+        { "name": "syft" },
+        { "name": "grype" },
+        { "name": "trivy" }
+      ],
+      "policy_path": "/v1/data/securestor/docker_policy",
+      "description": "Comprehensive scanning for Docker and OCI images",
+      "execution": {
+        "strategy": "parallel",
+        "failure_policy": "stop_on_critical"
+      },
+      "notifications": {
+        "on_violation": ["slack", "email"]
+      },
+      "enabled": true
+    },
+    {
+      "name": "MavenWorkflow",
+      "artifact_types": ["maven"],
+      "scanners": [
+        { "name": "syft" },
+        { "name": "depscan" },
+        { "name": "grype" }
+      ],
+      "policy_path": "/v1/data/securestor/maven_policy",
+      "description": "Security scanning for Maven artifacts",
+      "execution": {
+        "strategy": "sequential",
+        "failure_policy": "continue"
+      },
+      "enabled": true
+    },
+    {
+      "name": "NPMWorkflow",
+      "artifact_types": ["npm", "nodejs"],
+      "scanners": [
+        { "name": "syft" },
+        { "name": "depscan" }
+      ],
+      "policy_path": "/v1/data/securestor/npm_policy",
+      "description": "Scanning workflow for NPM and Node.js packages",
+      "execution": {
+        "strategy": "sequential"
+      },
+      "enabled": true
+    },
+    {
+      "name": "PythonWorkflow",
+      "artifact_types": ["python", "pypi", "wheel", "sdist"],
+      "scanners": [
+        { "name": "syft" },
+        { "name": "depscan" },
+        { "name": "grype" },
+        { "name": "trufflehog" },
+        { "name": "bandit" }
+      ],
+      "policy_path": "/v1/data/securestor/python_policy",
+      "description": "Python and PyPI security workflow with secret and static analysis",
+      "execution": {
+        "strategy": "parallel",
+        "failure_policy": "continue"
+      },
+      "enabled": true
+    },
+    {
+      "name": "GenericWorkflow",
+      "artifact_types": ["generic", "binary"],
+      "scanners": [
+        { "name": "trivy" },
+        { "name": "trufflehog" }
+      ],
+      "policy_path": "/v1/data/securestor/generic_policy",
+      "description": "General-purpose scanning workflow for non-standard artifacts",
+      "execution": {
+        "strategy": "sequential"
+      },
+      "enabled": true
+    }
+  ],
+  "tenants": {
+    "allow_override": true,
+    "default_policy_mode": "inherit",
+    "example_override": {
+      "tenant_id": "acme-inc",
+      "workflows": {
+        "DockerWorkflow": {
+          "enabled": true,
+          "scanners": ["syft", "grype"],
+          "execution": { "strategy": "sequential" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "title": "Sikkerhed",
+  "severity": {
+    "critical": "Kritisk",
+    "high": "Høj",
+    "medium": "Mellem",
+    "low": "Lav",
+    "info": "Info"
+  },
+  "scan": {
+    "title": "Sikkerhedsscanning",
+    "startScan": "Start scanning",
+    "scanning": "Scanner...",
+    "completed": "Scanning fuldført",
+    "failed": "Scanning fejlede",
+    "lastScan": "Sidste scanning",
+    "scanHistory": "Scanningshistorik",
+    "noScans": "Ingen scanninger endnu"
+  },
+  "vulnerabilities": {
+    "title": "Sårbarheder",
+    "found": "{{count}} sårbarhed fundet",
+    "found_plural": "{{count}} sårbarheder fundet",
+    "noVulnerabilities": "Ingen sårbarheder fundet",
+    "cveId": "CVE ID",
+    "description": "Beskrivelse",
+    "severity": "Alvorlighed",
+    "score": "Score",
+    "fixedIn": "Rettet i",
+    "publishedDate": "Offentliggørelses-dato",
+    "references": "Referencer"
+  },
+  "scanners": {
+    "title": "Scannere",
+    "available": "Tilgængelige scannere",
+    "enabled": "Aktiveret",
+    "disabled": "Deaktiveret",
+    "status": "Status",
+    "healthy": "Sund",
+    "unhealthy": "Usund"
+  },
+  "report": {
+    "title": "Sikkerhedsrapport",
+    "summary": "Oversigt",
+    "overallScore": "Samlet score",
+    "riskLevel": "Risikoniveau",
+    "totalVulnerabilities": "Samlede sårbarheder",
+    "bySeverity": "Efter alvorlighed",
+    "exportReport": "Eksporter rapport"
+  },
+  "riskLevels": {
+    "critical": "Kritisk risiko",
+    "high": "Høj risiko",
+    "medium": "Mellem risiko",
+    "low": "Lav risiko",
+    "minimal": "Minimal risiko"
+  },
+  "actions": {
+    "scanNow": "Scan nu",
+    "viewReport": "Se rapport",
+    "downloadReport": "Download rapport",
+    "ignoreVulnerability": "Ignorer sårbarhed",
+    "fixVulnerability": "Ret sårbarhed"
+  },
+  "header": {
+    "title": "Sikkerhedsscanning",
+    "description": "Overvåg og administrer sårbarhedsscanning",
+    "totalScans": "Samlede Scanninger",
+    "refresh": "Opdater",
+    "newScan": "Ny Scanning"
+  },
+  "messages": {
+    "scanInitiated": "Sikkerhedsscanning startet",
+    "scanFailed": "Kunne ikke oprette scanning",
+    "detailsFailed": "Kunne ikke indlæse scanningsdetaljer",
+    "errorLoading": "Fejl ved Indlæsning af Scanninger",
+    "retry": "Prøv igen"
+  }
+}

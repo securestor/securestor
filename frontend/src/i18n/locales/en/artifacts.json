@@ -1,0 +1,201 @@
+{
+  "title": "Artifacts",
+  "subtitle": "Manage your artifacts and packages",
+  "types": {
+    "docker": "Docker Image",
+    "npm": "npm Package",
+    "maven": "Maven Artifact",
+    "pypi": "PyPI Package",
+    "helm": "Helm Chart",
+    "generic": "Generic Artifact"
+  },
+  "actions": {
+    "upload": "Upload Artifact",
+    "download": "Download",
+    "delete": "Delete Artifact",
+    "scan": "Scan for Vulnerabilities",
+    "viewMetadata": "View Metadata",
+    "viewProperties": "View Properties",
+    "copyChecksum": "Copy Checksum",
+    "archive": "Archive",
+    "restore": "Restore"
+  },
+  "filters": {
+    "all": "All Artifacts",
+    "typeLabel": "Artifact Type",
+    "statusLabel": "Status",
+    "severityLabel": "Severity",
+    "repositoryLabel": "Repository",
+    "dateRange": "Date Range",
+    "clearFilters": "Clear Filters"
+  },
+  "sort": {
+    "name": "Name",
+    "size": "Size",
+    "date": "Date",
+    "version": "Version",
+    "downloads": "Downloads"
+  },
+  "metadata": {
+    "version": "Version",
+    "size": "Size",
+    "checksum": "Checksum",
+    "uploadedBy": "Uploaded By",
+    "uploadedAt": "Uploaded At",
+    "downloads": "Downloads",
+    "lastDownload": "Last Downloaded",
+    "repository": "Repository",
+    "path": "Path",
+    "license": "License",
+    "dependencies": "Dependencies",
+    "tags": "Tags",
+    "properties": "Properties"
+  },
+  "list": {
+    "noArtifacts": "No artifacts found",
+    "searchPlaceholder": "Search artifacts...",
+    "count": "{{count}} artifact",
+    "count_plural": "{{count}} artifacts",
+    "loading": "Loading artifacts...",
+    "selected": "{{count}} selected"
+  },
+  "upload": {
+    "title": "Upload Artifact",
+    "dragDrop": "Drag and drop files here",
+    "or": "or",
+    "browse": "Browse Files",
+    "selectFile": "Select a file to upload",
+    "uploading": "Uploading...",
+    "progress": "Upload Progress",
+    "success": "Artifact uploaded successfully",
+    "failed": "Upload failed"
+  },
+  "download": {
+    "downloading": "Downloading artifact...",
+    "success": "Download started",
+    "failed": "Download failed"
+  },
+  "delete": {
+    "confirm": "Are you sure you want to delete this artifact?",
+    "confirmMultiple": "Are you sure you want to delete {{count}} artifacts?",
+    "deleting": "Deleting artifact...",
+    "success": "Artifact deleted successfully",
+    "failed": "Failed to delete artifact"
+  },
+  "scan": {
+    "scanning": "Scanning for vulnerabilities...",
+    "lastScan": "Last Scan",
+    "noScan": "Not scanned yet",
+    "scanNow": "Scan Now",
+    "viewReport": "View Report",
+    "inProgress": "Scan in progress"
+  },
+  "vulnerabilities": {
+    "title": "Vulnerabilities",
+    "count": "{{count}} vulnerability found",
+    "count_plural": "{{count}} vulnerabilities found",
+    "none": "No vulnerabilities found",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "tabs": {
+    "all": "All Artifacts",
+    "compliant": "Compliant",
+    "policyViolation": "Policy Violations",
+    "legalHold": "Legal Holds",
+    "review": "Under Review",
+    "vulnerable": "Vulnerable"
+  },
+  "compliance": {
+    "status": "Overall Status",
+    "score": "Compliance Score",
+    "details": "Comprehensive Compliance",
+    "gdpr": "GDPR",
+    "retention": "Retention",
+    "legalHold": "Legal Hold",
+    "locality": "Locality",
+    "policyViolations": "Policy Violations",
+    "actions": "Compliance Actions",
+    "gdprErasure": "GDPR Erasure",
+    "auditReport": "Audit Report",
+    "policyCheck": "Policy Check",
+    "active": "Active",
+    "none": "None"
+  },
+  "details": {
+    "title": "Artifact Details",
+    "basicInfo": "Basic Information",
+    "metadata": "Metadata",
+    "securityScan": "Security Scan",
+    "viewFullReport": "View Full Report",
+    "copyInstallCommand": "Copy Install Command",
+    "quickActions": "Quick Actions",
+    "repositoryOverview": "Repository Overview",
+    "recentActivity": "Recent Activity",
+    "bulkDownload": "Bulk Download",
+    "runSecurityScan": "Run Security Scan",
+    "cleanupOldVersions": "Cleanup Old Versions",
+    "selectArtifact": "Select an artifact to view detailed information",
+    "tip": "Tip: Use filters to find specific artifacts quickly"
+  },
+  "filterOptions": {
+    "type": "Type",
+    "complianceStatus": "Compliance Status",
+    "dateRange": "Date Range",
+    "vulnerabilities": "Vulnerabilities",
+    "allTime": "All time",
+    "last24Hours": "Last 24 hours",
+    "last7Days": "Last 7 days",
+    "last30Days": "Last 30 days",
+    "customRange": "Custom range",
+    "all": "All",
+    "hasCritical": "Has critical",
+    "hasHigh": "Has high",
+    "noVulnerabilities": "No vulnerabilities"
+  },
+  "statuses": {
+    "compliant": "compliant",
+    "review": "review",
+    "nonCompliant": "non-compliant",
+    "policyViolation": "policy-violation",
+    "pendingReview": "pending-review",
+    "underLegalHold": "under-legal-hold",
+    "gdprErasureRequested": "gdpr-erasure-requested",
+    "retentionExpired": "retention-expired",
+    "pending": "pending"
+  },
+  "stats": {
+    "totalArtifacts": "Total Artifacts",
+    "compliant": "Compliant",
+    "underReview": "Under Review",
+    "criticalIssues": "Critical Issues"
+  },
+  "messages": {
+    "deleteConfirm": "Are you sure you want to delete this artifact?",
+    "deletedSuccess": "Artifact deleted successfully!",
+    "deleteFailed": "Delete failed",
+    "downloadedSuccess": "Artifact downloaded successfully!",
+    "downloadFailed": "Download failed",
+    "checksumCopied": "Checksum copied to clipboard!",
+    "checksumCopyFailed": "Failed to copy checksum",
+    "gdprErasureConfirm": "Are you sure you want to request GDPR data erasure for this artifact? This action cannot be undone.",
+    "gdprErasureSuccess": "GDPR data erasure request submitted successfully",
+    "gdprErasureConfiguring": "GDPR erasure feature is being configured. Please try again later.",
+    "legalHoldConfirm": "Do you want to place this artifact under legal hold? This will prevent its deletion.",
+    "legalHoldSuccess": "Legal hold placed successfully",
+    "legalHoldConfiguring": "Legal hold feature is being configured. Please try again later.",
+    "policyCheckSoon": "Policy check feature coming soon - will validate against all active compliance policies",
+    "auditReportSuccess": "Audit report generated - {{count}} events found",
+    "auditReportFailed": "Failed to generate audit report",
+    "auditReportError": "Network error generating audit report",
+    "scanInProgress": "Scan is currently in progress. Please try again later.",
+    "noScanResults": "No scan results available for this artifact.",
+    "scanLoadFailed": "Failed to load scan information. Please try again."
+  },
+  "issues": {
+    "issue": "issue",
+    "issues": "issues"
+  }
+}

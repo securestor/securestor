@@ -1,0 +1,147 @@
+{
+  "title": "Repositorier",
+  "subtitle": "Administrer og konfigurer dine artefakt-repositorier",
+  "addRepository": "Tilføj Repository",
+  "loading": "Indlæser repositorier...",
+  "error": "Fejl",
+  "retry": "Prøv igen",
+  "noRepositories": "Ingen repositorier fundet",
+  "createSuccess": "Repository \"{{name}}\" oprettet!",
+  "searchPlaceholder": "Søg repositorier eller artefakter...",
+  "newRepository": "Nyt Repository",
+  "import": "Importer",
+  "deployArtifact": "Implementer Artefakt",
+  "table": {
+    "name": "Navn",
+    "type": "Type",
+    "size": "Størrelse",
+    "artifacts": "Artefakter",
+    "status": "Status",
+    "lastUpdated": "Sidst opdateret",
+    "actions": "Handlinger"
+  },
+  "storageTypes": {
+    "local": "Lokal Lagring",
+    "remote": "Remote Proxy",
+    "cloud": "Cloud Lagring",
+    "public": "Offentlig"
+  },
+  "actions": {
+    "view": "Vis",
+    "copy": "Kopiér",
+    "delete": "Slet"
+  },
+  "artifactsView": {
+    "backToRepositories": "Tilbage til Repositorier",
+    "title": "Repository Artefakter",
+    "search": "Søg artefakter...",
+    "sortBy": "Sortér efter",
+    "sortAscending": "Sortér Stigende",
+    "sortDescending": "Sortér Faldende",
+    "filters": "Filtre",
+    "type": "Type",
+    "complianceStatus": "Overensstemmelsestilstand",
+    "all": "Alle",
+    "loading": "Indlæser artefakter...",
+    "error": "Kunne ikke indlæse artefakter",
+    "noArtifacts": "Ingen artefakter fundet",
+    "stats": {
+      "total": "Samlede Artefakter",
+      "size": "Samlet Størrelse",
+      "compliant": "Kompatibel",
+      "nonCompliant": "Ikke-kompatibel"
+    },
+    "columns": {
+      "name": "Navn/Version",
+      "type": "Type",
+      "size": "Størrelse",
+      "compliance": "Overensstemmelse",
+      "uploaded": "Uploadet",
+      "actions": "Handlinger"
+    },
+    "complianceStatuses": {
+      "compliant": "Kompatibel",
+      "non_compliant": "Ikke-kompatibel",
+      "pending": "Afventer Gennemgang",
+      "unknown": "Ukendt"
+    },
+    "messages": {
+      "uploaded": "Ny artefakt uploadet: {{name}}",
+      "updated": "Artefakt opdateret",
+      "deleted": "Artefakt slettet: {{name}}",
+      "scanStarted": "Sikkerhedsscanning startet",
+      "scanCompleted": "Sikkerhedsscanning fuldført",
+      "downloadSuccess": "Artefakt downloadet",
+      "downloadFailed": "Kunne ikke downloade artefakt",
+      "deleteSuccess": "Artefakt slettet",
+      "deleteFailed": "Kunne ikke slette artefakt"
+    }
+  },
+  "types": {
+    "local": "Lokal",
+    "remote": "Fjern",
+    "virtual": "Virtuel"
+  },
+  "create": {
+    "title": "Opret repository",
+    "nameLabel": "Repository-navn",
+    "namePlaceholder": "Indtast repository-navn",
+    "typeLabel": "Type",
+    "packageTypeLabel": "Pakketype",
+    "descriptionLabel": "Beskrivelse",
+    "descriptionPlaceholder": "Indtast beskrivelse",
+    "createButton": "Opret repository"
+  },
+  "list": {
+    "title": "Repositorier",
+    "noRepositories": "Ingen repositorier endnu",
+    "searchPlaceholder": "Søg repositorier...",
+    "count": "{{count}} repository",
+    "count_plural": "{{count}} repositorier"
+  },
+  "details": {
+    "title": "Repository-detaljer",
+    "generalInfo": "Generel information",
+    "settings": "Indstillinger",
+    "storage": "Lagring",
+    "cache": "Cache",
+    "replication": "Replikering",
+    "permissions": "Tilladelser"
+  },
+  "settings": {
+    "general": "Generelt",
+    "storage": "Lagring",
+    "cache": "Cache",
+    "replication": "Replikering",
+    "advanced": "Avanceret"
+  },
+  "storage": {
+    "used": "Brugt",
+    "available": "Tilgængelig",
+    "quota": "Kvote",
+    "unlimited": "Ubegrænset"
+  },
+  "cache": {
+    "enabled": "Aktiveret",
+    "disabled": "Deaktiveret",
+    "ttl": "Time to Live (TTL)",
+    "clearCache": "Ryd cache",
+    "cacheCleared": "Cache ryddet succesfuldt"
+  },
+  "repositoryActions": {
+    "create": "Opret repository",
+    "edit": "Rediger repository",
+    "delete": "Slet repository",
+    "clearCache": "Ryd cache",
+    "viewArtifacts": "Se artefakter",
+    "configure": "Konfigurer"
+  },
+  "delete": {
+    "confirmTitle": "Bekræft sletning",
+    "confirmMessage": "Er du sikker på, at du vil slette dette repository? Alle artefakter vil også blive slettet.",
+    "deleteButton": "Slet repository",
+    "deleting": "Sletter...",
+    "success": "Repository slettet succesfuldt",
+    "failed": "Sletning fejlede"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "title": "அமைப்புகள்",
+  "general": {
+    "title": "பொதுவான அமைப்புகள்",
+    "language": "மொழி",
+    "timezone": "நேர மண்டலம்",
+    "dateFormat": "தேதி வடிவம்",
+    "timeFormat": "நேர வடிவம்",
+    "theme": "தீம்",
+    "lightMode": "ஒளி பயன்முறை",
+    "darkMode": "இருண்ட பயன்முறை",
+    "auto": "தானியங்கு"
+  },
+  "security": {
+    "title": "பாதுகாப்பு அமைப்புகள்",
+    "changePassword": "கடவுச்சொல்லை மாற்று",
+    "currentPassword": "தற்போதைய கடவுச்சொல்",
+    "newPassword": "புதிய கடவுச்சொல்",
+    "confirmPassword": "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+    "encryption": "குறியாக்கம்",
+    "twoFactorAuth": "இரு காரணி அங்கீகாரம்",
+    "apiKeys": "API விசைகள்",
+    "sessions": "அமர்வுகள்",
+    "activeSessions": "செயல்படும் அமர்வுகள்",
+    "terminateSession": "அமர்வை முடிவுக்கு கொண்டுவா",
+    "accessControl": "அணுகல் கட்டுப்பாடு"
+  },
+  "notifications": {
+    "title": "அறிவிப்பு அமைப்புகள்",
+    "emailNotifications": "மின்னஞ்சல் அறிவிப்புகள்",
+    "pushNotifications": "புஷ் அறிவிப்புகள்",
+    "securityAlerts": "பாதுகாப்பு எச்சரிக்கைகள்",
+    "scanResults": "ஸ்கேன் முடிவுகள்",
+    "complianceAlerts": "இணக்க எச்சரிக்கைகள்",
+    "systemUpdates": "கணினி புதுப்பிப்புகள்"
+  },
+  "tenant": {
+    "title": "குத்தகை நிர்வாகம்",
+    "tenantName": "குத்தகை பெயர்",
+    "tenantId": "குத்தகை ID",
+    "plan": "திட்டம்",
+    "billingInfo": "பில்லிங் தகவல்",
+    "quota": "ஒதுக்கீடு",
+    "usage": "பயன்பாடு",
+    "limits": "வரம்புகள்"
+  },
+  "advanced": {
+    "title": "மேம்பட்ட அமைப்புகள்",
+    "caching": "கேஷிங்",
+    "replication": "பிரதியெடுப்பு",
+    "storageBackend": "சேமிப்பக பின்முனை",
+    "retention": "தக்கவைப்பு",
+    "logLevel": "பதிவு நிலை",
+    "debugMode": "பிழைதிருத்த பயன்முறை"
+  },
+  "actions": {
+    "saveSettings": "அமைப்புகளை சேமி",
+    "resetToDefault": "இயல்புநிலைக்கு மீட்டமை",
+    "exportSettings": "அமைப்புகளை ஏற்றுமதி செய்",
+    "importSettings": "அமைப்புகளை இறக்குமதி செய்"
+  },
+  "messages": {
+    "settingsSaved": "அமைப்புகள் வெற்றிகரமாக சேமிக்கப்பட்டன",
+    "settingsFailed": "அமைப்புகளை சேமிக்க முடியவில்லை",
+    "passwordChanged": "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது",
+    "passwordFailed": "கடவுச்சொல்லை மாற்ற முடியவில்லை"
+  }
+}

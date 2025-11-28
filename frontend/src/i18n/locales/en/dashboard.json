@@ -1,0 +1,43 @@
+{
+  "title": "Dashboard Overview",
+  "subtitle": "Enterprise artifact repository management",
+  "lastUpdated": "Last updated: {{time}}",
+  "stats": {
+    "totalRepositories": "Total Repositories",
+    "totalRepositoriesSubtitle": "Across all storage types",
+    "totalArtifacts": "Total Artifacts",
+    "totalArtifactsSubtitle": "Managed packages",
+    "storageUsed": "Storage Used",
+    "storageUsedSubtitle": "Across all repositories",
+    "systemHealth": "System Health",
+    "systemHealthSubtitle": "{{healthy}} of {{total}} repositories healthy",
+    "noRepositories": "No repositories yet"
+  },
+  "storageDistribution": {
+    "title": "Storage Distribution",
+    "localStorage": "Local Storage",
+    "localStorageDesc": "On-premises repositories",
+    "remoteProxy": "Remote Proxy",
+    "remoteProxyDesc": "Upstream registry mirrors",
+    "cloudStorage": "Cloud Storage",
+    "cloudStorageDesc": "S3, GCS, Azure Blob"
+  },
+  "repositoryHealth": {
+    "title": "Repository Health",
+    "healthy": "Healthy",
+    "activeRepositories": "Active Repositories",
+    "totalRepositories": "Total Repositories"
+  },
+  "quickInsights": {
+    "title": "Quick Insights",
+    "remoteProxies": "Remote Proxies",
+    "remoteProxiesDesc": "{{count}} registry configured",
+    "remoteProxiesDesc_plural": "{{count}} registries configured",
+    "cloudIntegration": "Cloud Integration",
+    "cloudIntegrationDesc": "{{count}} cloud storage bucket",
+    "cloudIntegrationDesc_plural": "{{count}} cloud storage buckets",
+    "localStorage": "Local Storage",
+    "localStorageDesc": "{{count}} on-premises repository",
+    "localStorageDesc_plural": "{{count}} on-premises repositories"
+  }
+}

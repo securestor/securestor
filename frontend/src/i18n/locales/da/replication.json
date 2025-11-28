@@ -1,0 +1,156 @@
+{
+  "page": {
+    "title": "Replikeringsindstillinger",
+    "description": "Konfigurer globale replikeringsstandarder og administrer lagernoder for høj tilgængelighed"
+  },
+  "buttons": {
+    "refresh": "Opdater",
+    "saveConfiguration": "Gem konfiguration",
+    "refreshAll": "Opdater alle",
+    "addNode": "Tilføj node",
+    "addFirstNode": "Tilføj din første node",
+    "cancel": "Annuller",
+    "updateNode": "Opdater node",
+    "saving": "Gemmer...",
+    "checkNow": "Tjek nu"
+  },
+  "loading": "Indlæser...",
+  "config": {
+    "title": "Replikeringskonfiguration",
+    "description": "Konfigurer globale replikeringsindstillinger for dine lagernoder. Systemet kræver et kvorum på {{quorumSize}} noder til skriveoperationer.",
+    "defaultQuorumSize": {
+      "label": "Standard kvorumstørrelse",
+      "help": "Antal noder krævet til skrive-kvorum (1-5)"
+    },
+    "syncFrequency": {
+      "label": "Synkroniseringsfrekvens",
+      "help": "Hvor ofte data skal synkroniseres på tværs af noder",
+      "options": {
+        "realtime": "Realtid",
+        "hourly": "Hver time",
+        "daily": "Dagligt",
+        "weekly": "Ugentligt"
+      }
+    },
+    "healthCheckInterval": {
+      "label": "Sundhedstjekinterval (sekunder)",
+      "help": "Interval for nodesundhedstjek (10-300 sekunder)"
+    },
+    "failoverTimeout": {
+      "label": "Failover timeout (sekunder)",
+      "help": "Timeout for node-failover (5-300 sekunder)"
+    },
+    "enabled": "Aktiver replikering"
+  },
+  "nodes": {
+    "title": "Lagernoder",
+    "emptyTitle": "Ingen lagernoder konfigureret",
+    "emptyDescription": "Klik på \"Tilføj node\" for at konfigurere din første lagernode",
+    "table": {
+      "status": "Status",
+      "name": "Navn",
+      "path": "Sti",
+      "storageUsage": "Lagerforbrug",
+      "files": "Filer",
+      "priority": "Prioritet",
+      "lastSync": "Sidste synkronisering",
+      "actions": "Handlinger"
+    },
+    "priority": {
+      "high": "(Høj)",
+      "normal": "(Normal)",
+      "low": "(Lav)"
+    },
+    "noData": "Ingen data",
+    "tooltips": {
+      "refreshAll": "Tjek sundhed og lager for alle noder",
+      "checkHealth": "Tjek sundhed",
+      "runHealthCheck": "Kør sundhedstjek for at indsamle lagermetrikker",
+      "edit": "Rediger",
+      "delete": "Slet"
+    }
+  },
+  "summary": {
+    "totalNodes": "Samlede noder",
+    "healthyNodes": "Sunde noder",
+    "totalCapacity": "Samlet kapacitet",
+    "usedSpace": "Brugt plads"
+  },
+  "dialog": {
+    "addTitle": "Tilføj lagernode",
+    "editTitle": "Rediger lagernode",
+    "nodeName": {
+      "label": "Nodenavn",
+      "placeholder": "f.eks., lager-node-1",
+      "help": "Nodenavn kan ikke ændres"
+    },
+    "nodeType": {
+      "label": "Nodetype",
+      "help": "Nodetype kan ikke ændres",
+      "options": {
+        "local": "Lokalt filsystem",
+        "s3": "AWS S3",
+        "minio": "MinIO (S3-kompatibel)",
+        "gcs": "Google Cloud Storage",
+        "azure": "Azure Blob Storage"
+      }
+    },
+    "storagePath": {
+      "label": "Lagersti",
+      "placeholder": "f.eks., /app/storage/node1",
+      "help": "Absolut sti til lagermappe"
+    },
+    "s3Endpoint": {
+      "label": "S3-endepunkt",
+      "placeholder": "f.eks., http://127.0.0.1:9000",
+      "help": "S3-kompatibel endepunkt-URL (lad stå tom for AWS S3)"
+    },
+    "region": {
+      "label": "Region",
+      "placeholder": "us-east-1"
+    },
+    "bucketName": {
+      "label": "Bucket-navn",
+      "placeholder": "replikere"
+    },
+    "accessKey": {
+      "label": "Adgangsnøgle",
+      "placeholder": "Indtast adgangsnøgle"
+    },
+    "secretKey": {
+      "label": "Hemmelig nøgle",
+      "placeholder": "Indtast hemmelig nøgle"
+    },
+    "pathPrefix": {
+      "label": "Stipræfiks (valgfrit)",
+      "placeholder": "f.eks., securestor/",
+      "help": "Valgfrit præfiks for objekter i bucketen"
+    },
+    "useSsl": "Brug SSL/TLS",
+    "priority": {
+      "label": "Prioritet",
+      "help": "Prioritetsniveau (1-100): Højere værdier = højere prioritet"
+    },
+    "isActive": {
+      "label": "Node er aktiv",
+      "help": "Inaktive noder deltager ikke i replikering"
+    },
+    "required": "*"
+  },
+  "messages": {
+    "loadError": "Kunne ikke indlæse replikeringsindstillinger",
+    "saveSuccess": "Konfiguration gemt succesfuldt!",
+    "saveFailed": "Kunne ikke gemme konfiguration",
+    "nodeAddSuccess": "Lagernode tilføjet succesfuldt!",
+    "nodeUpdateSuccess": "Lagernode opdateret succesfuldt!",
+    "nodeSaveFailed": "Kunne ikke gemme lagernode",
+    "nodeDeleteSuccess": "Lagernode slettet succesfuldt!",
+    "nodeDeleteFailed": "Kunne ikke slette lagernode",
+    "syncSuccess": "Node synkroniseret succesfuldt!",
+    "syncFailed": "Kunne ikke synkronisere node"
+  },
+  "healthStatus": {
+    "pathNotFound": "Lagersti findes ikke",
+    "pathInaccessible": "Lagersti er ikke tilgængelig"
+  }
+}

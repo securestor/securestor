@@ -1,0 +1,140 @@
+.replication-settings {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.replication-settings.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #666;
+}
+
+.settings-header {
+  margin-bottom: 32px;
+}
+
+.settings-header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.settings-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Alerts */
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert-error {
+  background-color: #fee;
+  color: #c00;
+  border: 1px solid #fcc;
+}
+
+.alert-success {
+  background-color: #efe;
+  color: #060;
+  border: 1px solid #cfc;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #ddd;
+  background: white;
+  padding: 0 0 0 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button {
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  color: #333;
+}
+
+.tab-button.active {
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+}
+
+/* Tab Content */
+.tab-content {
+  background: white;
+  padding: 24px;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Box */
+.info-box {
+  background: #e8f4fd;
+  border: 1px solid #b3d9e8;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.info-box h4 {
+  margin-bottom: 12px;
+  color: #0066cc;
+}
+
+.info-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-box li {
+  padding: 6px 0;
+  color: #333;
+  font-size: 13px;
+}
+
+.info-box strong {
+  color: #222;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .replication-settings {
+    padding: 16px;
+  }
+
+  .settings-header h1 {
+    font-size: 20px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab-content {
+    padding: 16px;
+  }
+}

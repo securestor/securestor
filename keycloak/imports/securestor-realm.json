@@ -1,0 +1,225 @@
+{
+  "realm": "securestor",
+  "enabled": true,
+  "displayName": "SecureStor",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>SecureStor</span></div>",
+  "loginTheme": "keycloak",
+  "accountTheme": "keycloak.v2",
+  "adminTheme": "keycloak",
+  "emailTheme": "keycloak",
+  "accessTokenLifespan": 3600,
+  "accessTokenLifespanForImplicitFlow": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "accessCodeLifespan": 60,
+  "accessCodeLifespanUserAction": 300,
+  "accessCodeLifespanLogin": 1800,
+  "actionTokenGeneratedByAdminLifespan": 43200,
+  "actionTokenGeneratedByUserLifespan": 300,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 30,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role with full access",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "securestor"
+      },
+      {
+        "name": "developer",
+        "description": "Developer role with read/write access to artifacts",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "securestor"
+      },
+      {
+        "name": "auditor",
+        "description": "Auditor role with read-only access for compliance",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "securestor"
+      },
+      {
+        "name": "user",
+        "description": "Basic user role with limited access",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "securestor"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@securestor.local",
+      "firstName": "Admin",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["admin", "user"],
+      "groups": []
+    },
+    {
+      "username": "developer",
+      "email": "developer@securestor.local", 
+      "firstName": "Developer",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "dev123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["developer", "user"],
+      "groups": []
+    },
+    {
+      "username": "auditor",
+      "email": "auditor@securestor.local",
+      "firstName": "Auditor", 
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "audit123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["auditor", "user"],
+      "groups": []
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "securestor-api",
+      "name": "SecureStor API",
+      "description": "SecureStor Backend API Client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "securestor-api-secret-key-2024",
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "https://localhost:8080/*",
+        "http://localhost:3000/*",
+        "https://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080",
+        "https://localhost:8080", 
+        "http://localhost:3000",
+        "https://localhost:3000"
+      ],
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": 0,
+      "protocolMappers": [
+        {
+          "name": "username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "username",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "email",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "email",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "multivalued": "true"
+          }
+        }
+      ],
+      "defaultClientScopes": ["profile", "email", "roles"],
+      "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
+    },
+    {
+      "clientId": "securestor-frontend",
+      "name": "SecureStor Frontend",
+      "description": "SecureStor React Frontend",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "https://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://localhost:3000"
+      ],
+      "protocol": "openid-connect",
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "fullScopeAllowed": true,
+      "defaultClientScopes": ["profile", "email", "roles"],
+      "optionalClientScopes": ["address", "phone", "offline_access"]
+    }
+  ]
+}

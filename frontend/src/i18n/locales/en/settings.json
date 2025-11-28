@@ -1,0 +1,66 @@
+{
+  "title": "Tenant Settings",
+  "subtitle": "Manage tenant configuration, security, and preferences",
+  "loadingSettings": "Loading tenant settings...",
+  "saveAll": "Save All",
+  "saveSuccess": "{{section}} settings saved successfully!",
+  "saveAllSuccess": "All settings saved successfully!",
+  "tabs": {
+    "general": "General",
+    "security": "Security",
+    "users": "Users & Access",
+    "storage": "Storage & Limits",
+    "notifications": "Notifications",
+    "integrations": "Integrations",
+    "compliance": "Compliance",
+    "billing": "Billing & Usage"
+  },
+  "tenant": {
+    "title": "Tenant Management",
+    "updateSuccess": "Tenant information updated successfully!",
+    "updateError": "Failed to update tenant information: {{message}}"
+  },
+  "general": {
+    "title": "General Settings",
+    "language": "Language",
+    "timezone": "Timezone",
+    "dateFormat": "Date Format",
+    "theme": "Theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "autoMode": "Auto"
+  },
+  "security": {
+    "title": "Security Settings",
+    "encryption": "Encryption",
+    "encryptionEnabled": "Encryption Enabled",
+    "encryptionDisabled": "Encryption Disabled",
+    "twoFactorAuth": "Two-Factor Authentication",
+    "apiKeys": "API Keys",
+    "accessControl": "Access Control",
+    "permissions": "Permissions"
+  },
+  "notifications": {
+    "title": "Notification Settings",
+    "emailNotifications": "Email Notifications",
+    "pushNotifications": "Push Notifications",
+    "securityAlerts": "Security Alerts",
+    "scanResults": "Scan Results",
+    "complianceReports": "Compliance Reports",
+    "systemUpdates": "System Updates"
+  },
+  "advanced": {
+    "title": "Advanced Settings",
+    "caching": "Caching",
+    "replication": "Replication",
+    "storageBackend": "Storage Backend",
+    "retention": "Retention Policies",
+    "backups": "Backups"
+  },
+  "actions": {
+    "saveSettings": "Save Settings",
+    "resetToDefault": "Reset to Default",
+    "exportSettings": "Export Settings",
+    "importSettings": "Import Settings"
+  }
+}

@@ -1,0 +1,679 @@
+services:
+  # ========== SIMPLE DEPLOYMENT (default) ==========
+  
+  postgres:
+    image: postgres:15-alpine
+    profiles: ["", "default"]
+    environment:
+      POSTGRES_DB: securestor
+      POSTGRES_USER: securestor
+      POSTGRES_PASSWORD: securestor123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securestor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["", "default"]
+    environment:
+      REDIS_PASSWORD: redis123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  opa:
+    image: openpolicyagent/opa:latest
+    platform: linux/amd64
+    profiles: ["", "default", "ha"]
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./policies:/policies
+    command: 
+      - "run"
+      - "--server"
+      - "--addr"
+      - "0.0.0.0:8181"
+      - "--log-level=info"
+      - "--log-format=json"
+      - "/policies"
+    healthcheck:
+      test: ["CMD", "/opa", "version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["", "default"]
+    env_file:
+      - .env
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgresql://securestor:securestor123@postgres:5432/securestor?sslmode=disable
+      REDIS_URL: redis://:redis123@redis:6379/0
+      JWT_SECRET: your-secret-key-change-in-production
+      ENVIRONMENT: development
+      STORAGE_PATH: /app/storage
+      MAX_FILE_SIZE: 524288000
+      # Erasure coding configuration for high availability
+      ERASURE_DATA_SHARDS: 6
+      ERASURE_PARITY_SHARDS: 3
+      # Security scanning configuration
+      PYTHONPATH: /opt/python-tools
+      SCANNER_TIMEOUT: 600
+      ENABLE_SECURITY_SCANNING: "true"
+      # OPA Policy Engine configuration
+      OPA_URL: http://opa:8181
+      OPA_ENABLED: "true"
+      # Redis configuration
+      REDIS_CACHE_TTL: 3600
+      REDIS_SESSION_TTL: 86400
+      # Enterprise Encryption Configuration
+      ENCRYPTION_ENABLED: "true"
+      ENCRYPTION_ENFORCED: "false"
+      ENCRYPTION_MODE: mock
+      KEY_CACHE_TTL_MINUTES: 5
+      KEY_ROTATION_DAYS: 90
+      AWS_KMS_KEY_ID: "alias/securestor-master-key"
+      AWS_REGION: us-east-1
+    ports:
+      - "8080:8080"
+    volumes:
+      # Main storage directory
+      - ./data:/app/storage
+      # Separate volume for artifacts (can be moved to external storage later)
+      - artifact_data:/app/storage/artifacts
+      # Logs directory for easier debugging
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      opa:
+        condition: service_started
+      keycloak:
+        condition: service_started
+    restart: unless-stopped
+
+  # ========== HIGH AVAILABILITY DEPLOYMENT (--profile ha) ==========
+  
+  # Storage nodes for 3-way replication
+  storage-1:
+    image: alpine:latest
+    profiles: ["ha"]
+    command: sh -c "mkdir -p /storage && tail -f /dev/null"
+    volumes:
+      - storage_node_1:/storage
+    healthcheck:
+      test: ["CMD", "test", "-d", "/storage"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  storage-2:
+    image: alpine:latest
+    profiles: ["ha"]
+    command: sh -c "mkdir -p /storage && tail -f /dev/null"
+    volumes:
+      - storage_node_2:/storage
+    healthcheck:
+      test: ["CMD", "test", "-d", "/storage"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  storage-3:
+    image: alpine:latest
+    profiles: ["ha"]
+    command: sh -c "mkdir -p /storage && tail -f /dev/null"
+    volumes:
+      - storage_node_3:/storage
+    healthcheck:
+      test: ["CMD", "test", "-d", "/storage"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  # PostgreSQL Primary (for HA)
+  postgres-primary:
+    image: postgres:15-alpine
+    profiles: ["ha"]
+    environment:
+      POSTGRES_DB: securestor
+      POSTGRES_USER: securestor
+      POSTGRES_PASSWORD: securestor123
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_INITDB_ARGS: "-A md5"
+    command: >
+      postgres
+      -c max_wal_senders=10
+      -c wal_level=replica
+      -c hot_standby=on
+      -c max_replication_slots=10
+      -c listen_addresses='*'
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_primary_data:/var/lib/postgresql/data
+      - ./scripts/postgres_setup.sh:/docker-entrypoint-initdb.d/setup.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securestor -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # PostgreSQL Standby (for HA)
+  postgres-standby:
+    image: postgres:15-alpine
+    profiles: ["ha"]
+    environment:
+      POSTGRES_DB: securestor
+      POSTGRES_USER: securestor
+      POSTGRES_PASSWORD: securestor123
+      PGUSER: securestor
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_standby_data:/var/lib/postgresql/data
+      - ./scripts/postgres_standby_entrypoint.sh:/docker-entrypoint-initdb.d/00-setup-replication.sh
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    command: >
+      bash -c "
+      if [ ! -f /var/lib/postgresql/data/PG_VERSION ]; then
+        echo 'Initializing standby from primary...';
+        export PGPASSWORD='replication123';
+        pg_basebackup -h postgres-primary -D /var/lib/postgresql/data -U replication_user -v -P -R --wal-method=stream || exit 1;
+        chmod 700 /var/lib/postgresql/data;
+        chown -R postgres:postgres /var/lib/postgresql/data;
+      fi;
+      exec docker-entrypoint.sh postgres -c max_wal_senders=10 -c wal_level=replica -c hot_standby=on
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=securestor123 pg_isready -U securestor -h localhost || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # Redis Master (for HA)
+  redis-master:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    environment:
+      REDIS_PASSWORD: redis123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_master_data:/data
+    command: redis-server --requirepass redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # Redis Replicas (for HA)
+  redis-replica-1:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_replica_1_data:/data
+    command: redis-server --slaveof redis-master 6379 --requirepass redis123 --masterauth redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    depends_on:
+      - redis-master
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  redis-replica-2:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis_replica_2_data:/data
+    command: redis-server --slaveof redis-master 6379 --requirepass redis123 --masterauth redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    depends_on:
+      - redis-master
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # Redis Sentinels (for HA)
+  redis-sentinel-1:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    ports:
+      - "26379:26379"
+    volumes:
+      - ./scripts/sentinel-dynamic.sh:/scripts/sentinel-dynamic.sh:ro
+      - redis_sentinel_1_data:/var/lib/sentinel
+      - redis_sentinel_1_logs:/var/log/sentinel
+    command: sh /scripts/sentinel-dynamic.sh
+    depends_on:
+      redis-master:
+        condition: service_healthy
+      redis-replica-1:
+        condition: service_healthy
+      redis-replica-2:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  redis-sentinel-2:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    ports:
+      - "26380:26379"
+    volumes:
+      - ./scripts/sentinel-dynamic.sh:/scripts/sentinel-dynamic.sh:ro
+      - redis_sentinel_2_data:/var/lib/sentinel
+      - redis_sentinel_2_logs:/var/log/sentinel
+    command: sh /scripts/sentinel-dynamic.sh
+    depends_on:
+      redis-master:
+        condition: service_healthy
+      redis-replica-1:
+        condition: service_healthy
+      redis-replica-2:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  redis-sentinel-3:
+    image: redis:7-alpine
+    profiles: ["ha"]
+    ports:
+      - "26381:26379"
+    volumes:
+      - ./scripts/sentinel-dynamic.sh:/scripts/sentinel-dynamic.sh:ro
+      - redis_sentinel_3_data:/var/lib/sentinel
+      - redis_sentinel_3_logs:/var/log/sentinel
+    command: sh /scripts/sentinel-dynamic.sh
+    depends_on:
+      redis-master:
+        condition: service_healthy
+      redis-replica-1:
+        condition: service_healthy
+      redis-replica-2:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # API Instances (for HA load balancing)
+  api-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["ha"]
+    env_file:
+      - .env
+    environment:
+      PORT: 8080
+      INSTANCE_ID: api-1
+      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
+      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
+      REDIS_URL: redis://:redis123@redis-master:6379/0
+      REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
+      REDIS_SENTINEL_MASTER: mymaster
+      JWT_SECRET: your-secret-key-change-in-production
+      ENVIRONMENT: ha
+      STORAGE_PATH: /app/storage
+      MAX_FILE_SIZE: 524288000
+      REPLICATION_BUCKETS: /app/storage/node1:/app/storage/node2:/app/storage/node3
+      ERASURE_DATA_SHARDS: 6
+      ERASURE_PARITY_SHARDS: 3
+      PYTHONPATH: /opt/python-tools
+      SCANNER_TIMEOUT: 600
+      ENABLE_SECURITY_SCANNING: "true"
+      OPA_URL: http://opa:8181
+      OPA_ENABLED: "true"
+      REDIS_CACHE_TTL: 3600
+      REDIS_SESSION_TTL: 86400
+      # Enterprise Encryption Configuration (HA)
+      ENCRYPTION_ENABLED: "true"
+      ENCRYPTION_ENFORCED: "true"
+      ENCRYPTION_MODE: mock
+      KEY_CACHE_TTL_MINUTES: 5
+      KEY_ROTATION_DAYS: 90
+      AWS_KMS_KEY_ID: "alias/securestor-master-key"
+      AWS_REGION: us-east-1
+    volumes:
+      - ./data/node1:/app/storage/node1
+      - ./data/node2:/app/storage/node2
+      - ./data/node3:/app/storage/node3
+      - artifact_data_1:/app/storage/artifacts
+      - ./logs:/app/logs
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-master:
+        condition: service_healthy
+      opa:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/v1/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  api-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["ha"]
+    env_file:
+      - .env
+    environment:
+      PORT: 8080
+      INSTANCE_ID: api-2
+      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
+      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
+      REDIS_URL: redis://:redis123@redis-master:6379/0
+      REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
+      REDIS_SENTINEL_MASTER: mymaster
+      JWT_SECRET: your-secret-key-change-in-production
+      ENVIRONMENT: ha
+      STORAGE_PATH: /app/storage
+      MAX_FILE_SIZE: 524288000
+      REPLICATION_BUCKETS: /app/storage/node1:/app/storage/node2:/app/storage/node3
+      ERASURE_DATA_SHARDS: 6
+      ERASURE_PARITY_SHARDS: 3
+      PYTHONPATH: /opt/python-tools
+      SCANNER_TIMEOUT: 600
+      ENABLE_SECURITY_SCANNING: "true"
+      OPA_URL: http://opa:8181
+      OPA_ENABLED: "true"
+      REDIS_CACHE_TTL: 3600
+      REDIS_SESSION_TTL: 86400
+      # Enterprise Encryption Configuration (HA)
+      ENCRYPTION_ENABLED: "true"
+      ENCRYPTION_ENFORCED: "true"
+      ENCRYPTION_MODE: mock
+      KEY_CACHE_TTL_MINUTES: 5
+      KEY_ROTATION_DAYS: 90
+      AWS_KMS_KEY_ID: "alias/securestor-master-key"
+      AWS_REGION: us-east-1
+    volumes:
+      - ./data/node1:/app/storage/node1
+      - ./data/node2:/app/storage/node2
+      - ./data/node3:/app/storage/node3
+      - artifact_data_2:/app/storage/artifacts
+      - ./logs:/app/logs
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-master:
+        condition: service_healthy
+      opa:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/v1/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  api-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["ha"]
+    env_file:
+      - .env
+    environment:
+      PORT: 8080
+      INSTANCE_ID: api-3
+      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
+      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
+      REDIS_URL: redis://:redis123@redis-master:6379/0
+      REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
+      REDIS_SENTINEL_MASTER: mymaster
+      JWT_SECRET: your-secret-key-change-in-production
+      ENVIRONMENT: ha
+      STORAGE_PATH: /app/storage
+      MAX_FILE_SIZE: 524288000
+      REPLICATION_BUCKETS: /app/storage/node1:/app/storage/node2:/app/storage/node3
+      ERASURE_DATA_SHARDS: 6
+      ERASURE_PARITY_SHARDS: 3
+      PYTHONPATH: /opt/python-tools
+      SCANNER_TIMEOUT: 600
+      ENABLE_SECURITY_SCANNING: "true"
+      OPA_URL: http://opa:8181
+      OPA_ENABLED: "true"
+      REDIS_CACHE_TTL: 3600
+      REDIS_SESSION_TTL: 86400
+      # Enterprise Encryption Configuration (HA)
+      ENCRYPTION_ENABLED: "true"
+      ENCRYPTION_ENFORCED: "true"
+      ENCRYPTION_MODE: mock
+      KEY_CACHE_TTL_MINUTES: 5
+      KEY_ROTATION_DAYS: 90
+      AWS_KMS_KEY_ID: "alias/securestor-master-key"
+      AWS_REGION: us-east-1
+    volumes:
+      - ./data/node1:/app/storage/node1
+      - ./data/node2:/app/storage/node2
+      - ./data/node3:/app/storage/node3
+      - artifact_data_3:/app/storage/artifacts
+      - ./logs:/app/logs
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-master:
+        condition: service_healthy
+      opa:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/v1/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # Nginx Load Balancer (for HA)
+  nginx-lb:
+    image: nginx:alpine
+    profiles: ["ha"]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./configs/nginx-ha.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - api-1
+      - api-2
+      - api-3
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  # ========== SHARED SERVICES ==========
+
+  # Frontend (React Application)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    profiles: ["", "default"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=http://localhost:8080
+      - REACT_APP_BACKEND_PORT=8080
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    profiles: ["", "default", "ha"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_URL_PORT: 5432
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak123
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HTTP_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./keycloak/themes:/opt/keycloak/themes
+      - ./keycloak/imports:/opt/keycloak/data/import
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    command: ["start-dev", "--db=postgres", "--import-realm"]
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
+  frontend-ha:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    profiles: ["ha"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=http://localhost
+      - REACT_APP_BACKEND_PORT=80
+    depends_on:
+      - nginx-lb
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - securestor
+
+  keycloak-db:
+    image: postgres:15-alpine
+    profiles: ["", "default", "ha"]
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak123
+    ports:
+      - "5433:5432"
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  artifact_data:
+  keycloak_data:
+
+  # HA deployment volumes
+  storage_node_1:
+  storage_node_2:
+  storage_node_3:
+  postgres_primary_data:
+  postgres_standby_data:
+  redis_master_data:
+  redis_replica_1_data:
+  redis_replica_2_data:
+  artifact_data_1:
+  artifact_data_2:
+  artifact_data_3:
+
+  # Redis sentinel volumes
+  redis_sentinel_1_data:
+  redis_sentinel_1_logs:
+  redis_sentinel_2_data:
+  redis_sentinel_2_logs:
+  redis_sentinel_3_data:
+  redis_sentinel_3_logs:
+
+networks:
+  securestor:
+    driver: bridge

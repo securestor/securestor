@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-primary
+  namespace: securestor
+spec:
+  selector:
+    app: postgres-primary
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-primary
+  namespace: securestor
+spec:
+  serviceName: postgres-primary
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-primary
+  template:
+    metadata:
+      labels:
+        app: postgres-primary
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: securestor
+        - name: POSTGRES_USER
+          value: securestor
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: securestor-secrets
+              key: postgres-password
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: md5
+        - name: POSTGRES_INITDB_ARGS
+          value: "-A md5"
+        args:
+          - "postgres"
+          - "-c"
+          - "max_wal_senders=10"
+          - "-c"
+          - "wal_level=replica"
+          - "-c"
+          - "hot_standby=on"
+          - "-c"
+          - "max_replication_slots=10"
+          - "-c"
+          - "listen_addresses=*"
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - pg_isready -U securestor
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - pg_isready -U securestor
+          initialDelaySeconds: 5
+          periodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-standby
+  namespace: securestor
+spec:
+  selector:
+    app: postgres-standby
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-standby
+  namespace: securestor
+spec:
+  serviceName: postgres-standby
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-standby
+  template:
+    metadata:
+      labels:
+        app: postgres-standby
+    spec:
+      initContainers:
+      - name: init-standby
+        image: postgres:15-alpine
+        env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: securestor-secrets
+              key: replication-password
+        command:
+        - /bin/sh
+        - -c
+        - |
+          if [ ! -f /var/lib/postgresql/data/PG_VERSION ]; then
+            echo "Initializing standby from primary..."
+            pg_basebackup -h postgres-primary-0.postgres-primary.securestor.svc.cluster.local \
+              -D /var/lib/postgresql/data \
+              -U replication_user \
+              -v -P -R --wal-method=stream
+            chmod 700 /var/lib/postgresql/data
+          fi
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: securestor
+        - name: POSTGRES_USER
+          value: securestor
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: securestor-secrets
+              key: postgres-password
+        - name: PGUSER
+          value: securestor
+        args:
+          - "postgres"
+          - "-c"
+          - "max_wal_senders=10"
+          - "-c"
+          - "wal_level=replica"
+          - "-c"
+          - "hot_standby=on"
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - pg_isready -U securestor
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - pg_isready -U securestor
+          initialDelaySeconds: 5
+          periodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

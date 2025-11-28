@@ -1,0 +1,147 @@
+{
+  "title": "Security",
+  "subtitle": "Security scanning and vulnerability management",
+  "severity": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "info": "Info",
+    "unknown": "Unknown"
+  },
+  "scan": {
+    "title": "Security Scans",
+    "startScan": "Start Scan",
+    "scanNow": "Scan Now",
+    "scanning": "Scanning...",
+    "inProgress": "Scan in Progress",
+    "completed": "Scan Completed",
+    "failed": "Scan Failed",
+    "lastScan": "Last Scan",
+    "neverScanned": "Never scanned",
+    "scanHistory": "Scan History",
+    "viewReport": "View Report"
+  },
+  "vulnerabilities": {
+    "title": "Vulnerabilities",
+    "found": "{{count}} vulnerability found",
+    "found_plural": "{{count}} vulnerabilities found",
+    "noVulnerabilities": "No vulnerabilities found",
+    "cveId": "CVE ID",
+    "description": "Description",
+    "affected": "Affected Component",
+    "fixedIn": "Fixed In",
+    "publishedDate": "Published Date",
+    "references": "References",
+    "score": "CVSS Score"
+  },
+  "scanners": {
+    "title": "Scanners",
+    "available": "Available Scanners",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "status": "Scanner Status",
+    "healthy": "Healthy",
+    "unhealthy": "Unhealthy"
+  },
+  "report": {
+    "title": "Security Report",
+    "summary": "Summary",
+    "overallScore": "Overall Score",
+    "riskLevel": "Risk Level",
+    "recommendations": "Recommendations",
+    "exportReport": "Export Report",
+    "downloadPDF": "Download PDF",
+    "downloadJSON": "Download JSON"
+  },
+  "riskLevels": {
+    "critical": "Critical Risk",
+    "high": "High Risk",
+    "medium": "Medium Risk",
+    "low": "Low Risk",
+    "minimal": "Minimal Risk"
+  },
+  "table": {
+    "scanId": "Scan ID",
+    "artifact": "Artifact",
+    "type": "Type",
+    "status": "Status",
+    "priority": "Priority",
+    "started": "Started",
+    "duration": "Duration",
+    "results": "Results",
+    "actions": "Actions",
+    "score": "Score",
+    "view": "View",
+    "cache": "Cache",
+    "deleted": "Deleted",
+    "loading": "Loading scans...",
+    "noScans": "No scans found",
+    "noScansDescription": "Get started by creating your first security scan.",
+    "refresh": "Refresh"
+  },
+  "filters": {
+    "title": "Filters",
+    "status": "Status",
+    "type": "Type",
+    "priority": "Priority",
+    "date": "Date",
+    "allStatus": "All Status",
+    "allTypes": "All Types",
+    "allPriorities": "All Priorities",
+    "allTime": "All Time",
+    "today": "Today",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "clearAll": "Clear All"
+  },
+  "scanTypes": {
+    "full": "Full Scan",
+    "quick": "Quick Scan",
+    "custom": "Custom Scan",
+    "bulk": "Bulk Scan"
+  },
+  "statuses": {
+    "initiated": "Initiated",
+    "running": "Running",
+    "completed": "Completed",
+    "failed": "Failed",
+    "cancelled": "Cancelled"
+  },
+  "priorities": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "modal": {
+    "createTitle": "Create Security Scan",
+    "artifactLabel": "Artifact to Scan",
+    "artifactPlaceholder": "Select an artifact",
+    "scanTypeLabel": "Scan Type",
+    "priorityLabel": "Priority",
+    "scanOptionsLabel": "Scan Options",
+    "vulnerabilityScan": "Vulnerability Scan",
+    "malwareScan": "Malware Scan",
+    "licenseScan": "License Scan",
+    "dependencyScan": "Dependency Scan",
+    "cancel": "Cancel",
+    "startScan": "Start Scan",
+    "loadingArtifacts": "Loading artifacts...",
+    "selectArtifactError": "Please select an artifact to scan"
+  },
+  "header": {
+    "title": "Security Scans",
+    "description": "Monitor and manage vulnerability scans",
+    "totalScans": "Total Scans",
+    "refresh": "Refresh",
+    "newScan": "New Scan"
+  },
+  "messages": {
+    "scanInitiated": "Security scan initiated successfully",
+    "scanFailed": "Failed to create scan",
+    "detailsFailed": "Failed to load scan details",
+    "errorLoading": "Error Loading Scans",
+    "retry": "Retry"
+  }
+}

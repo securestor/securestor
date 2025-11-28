@@ -1,0 +1,258 @@
+{
+  "title": "Repositories",
+  "subtitle": "Manage and configure your artifact repositories",
+  "addRepository": "Add Repository",
+  "loading": "Loading repositories...",
+  "error": "Error",
+  "retry": "Retry",
+  "noRepositories": "No repositories found",
+  "createSuccess": "Repository \"{{name}}\" created successfully!",
+  "searchPlaceholder": "Search repositories or artifacts...",
+  "newRepository": "New Repository",
+  "import": "Import",
+  "deployArtifact": "Deploy Artifact",
+  "table": {
+    "name": "Name",
+    "type": "Type",
+    "size": "Size",
+    "artifacts": "Artifacts",
+    "status": "Status",
+    "lastUpdated": "Last Updated",
+    "actions": "Actions"
+  },
+  "storageTypes": {
+    "local": "Local Storage",
+    "remote": "Remote Proxy",
+    "cloud": "Cloud Storage",
+    "public": "Public"
+  },
+  "actions": {
+    "view": "View",
+    "copy": "Copy",
+    "delete": "Delete"
+  },
+  "artifactsView": {
+    "backToRepositories": "Back to Repositories",
+    "title": "Repository Artifacts",
+    "search": "Search artifacts...",
+    "sortBy": "Sort by",
+    "sortAscending": "Sort Ascending",
+    "sortDescending": "Sort Descending",
+    "filters": "Filters",
+    "type": "Type",
+    "complianceStatus": "Compliance Status",
+    "all": "All",
+    "loading": "Loading artifacts...",
+    "error": "Failed to load artifacts",
+    "noArtifacts": "No artifacts found",
+    "stats": {
+      "total": "Total Artifacts",
+      "size": "Total Size",
+      "compliant": "Compliant",
+      "nonCompliant": "Non-Compliant"
+    },
+    "columns": {
+      "name": "Name/Version",
+      "type": "Type",
+      "size": "Size",
+      "compliance": "Compliance",
+      "uploaded": "Uploaded",
+      "actions": "Actions"
+    },
+    "complianceStatuses": {
+      "compliant": "Compliant",
+      "non_compliant": "Non-Compliant",
+      "pending": "Pending Review",
+      "unknown": "Unknown"
+    },
+    "messages": {
+      "uploaded": "New artifact uploaded: {{name}}",
+      "updated": "Artifact updated",
+      "deleted": "Artifact deleted: {{name}}",
+      "scanStarted": "Security scan started",
+      "scanCompleted": "Security scan completed",
+      "downloadSuccess": "Artifact downloaded successfully",
+      "downloadFailed": "Failed to download artifact",
+      "deleteSuccess": "Artifact deleted successfully",
+      "deleteFailed": "Failed to delete artifact"
+    }
+  },
+  "legend": {
+    "local": "Local",
+    "remoteProxy": "Remote Proxy",
+    "cloudStorage": "Cloud Storage"
+  },
+  "remote": {
+    "title": "Remote Repositories",
+    "subtitle": "Manage cloud storage providers and remote artifact sources",
+    "refresh": "Refresh",
+    "metrics": {
+      "cacheHitRate": "Cache Hit Rate",
+      "totalRequests": "Total Requests",
+      "cacheHits": "Cache Hits",
+      "cacheMisses": "Cache Misses"
+    },
+    "proxyCache": {
+      "title": "Remote Proxy Cache Performance",
+      "subtitle": "Multi-tier caching for Maven, Docker, PyPI, and Helm",
+      "bandwidthSaved": "Bandwidth Saved",
+      "avgResponse": "Avg Response"
+    },
+    "testConnection": "Test Connection",
+    "connectionSuccess": "Connection successful: {{message}}",
+    "connectionFailed": "Connection failed: {{error}}",
+    "testFailed": "Failed to test connection",
+    "loadFailed": "Failed to load remote repositories"
+  },
+  "types": {
+    "local": "Local Repository",
+    "remote": "Remote Repository",
+    "virtual": "Virtual Repository",
+    "cloud": "Cloud Storage"
+  },
+  "create": {
+    "title": "Create New Repository",
+    "nameLabel": "Repository Name",
+    "namePlaceholder": "e.g., docker-prod",
+    "nameHelperText": "Use lowercase letters, numbers, and hyphens",
+    "typeLabel": "Package Type",
+    "searchPlaceholder": "🔍 Search package types...",
+    "selectedType": "Selected",
+    "repositoryTypeLabel": "Repository Type",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Brief description of this repository...",
+    "createButton": "Create Repository",
+    "creating": "Creating...",
+    "cancelButton": "Cancel",
+    "remoteSettings": "Remote Repository Settings",
+    "remoteUrlLabel": "Remote URL",
+    "remoteUrlPlaceholder": "https://registry.npmjs.org",
+    "usernameLabel": "Username (optional)",
+    "passwordLabel": "Password (optional)",
+    "cloudSettings": "Cloud Storage Settings",
+    "cloudProviderLabel": "Cloud Provider",
+    "publicAccessLabel": "Enable public access (anonymous users can read)",
+    "indexingLabel": "Enable indexing for faster searches",
+    "searchResults": "Search results for",
+    "noResults": "No package types found matching",
+    "clearSearch": "Clear search",
+    "categories": {
+      "popular": "Popular",
+      "container": "Container & Cloud Native",
+      "languages": "Languages",
+      "aiMl": "AI & ML",
+      "infrastructure": "Infrastructure",
+      "embedded": "Embedded & IoT",
+      "specialized": "Specialized"
+    },
+    "repositoryTypes": {
+      "localDescription": "Host artifacts locally",
+      "remoteDescription": "Proxy external repository",
+      "cloudDescription": "Connect to third-party cloud storage"
+    },
+    "encryption": {
+      "title": "Enterprise Encryption",
+      "enforced": "ENFORCED",
+      "description": "All artifacts in this repository will be automatically encrypted using <strong>AES-256-GCM</strong> envelope encryption. Encryption is system-managed and mandatory for security compliance.",
+      "algorithm": "<strong>Algorithm:</strong> AES-256-GCM (FIPS 140-2 compliant)",
+      "keyManagement": "<strong>Key Management:</strong> Tenant-specific master keys with automatic rotation",
+      "protection": "<strong>Protection:</strong> Encryption at rest + TLS 1.3 in transit",
+      "audit": "<strong>Audit:</strong> All encryption operations logged for compliance"
+    },
+    "cloudProviders": {
+      "s3": "Amazon S3",
+      "s3Compatible": "S3-Compatible",
+      "github": "GitHub Packages",
+      "awsEcr": "AWS ECR",
+      "azure": "Azure Container Registry",
+      "gcp": "Google Container Registry",
+      "s3Description": "AWS S3 storage",
+      "s3CompatibleDescription": "DigitalOcean, MinIO, etc.",
+      "githubDescription": "GitHub Packages",
+      "awsEcrDescription": "Amazon ECR",
+      "azureDescription": "Coming soon",
+      "gcpDescription": "Coming soon"
+    },
+    "cloudConfig": {
+      "accessKeyIdLabel": "Access Key ID",
+      "secretAccessKeyLabel": "Secret Access Key",
+      "bucketNameLabel": "Bucket Name",
+      "bucketNamePlaceholder": "my-artifact-bucket",
+      "regionLabel": "Region",
+      "regionPlaceholder": "us-east-1",
+      "endpointLabel": "Custom Endpoint",
+      "endpointPlaceholder": "https://s3.example.com or https://nyc3.digitaloceanspaces.com",
+      "githubTokenLabel": "GitHub Personal Access Token",
+      "githubTokenPlaceholder": "ghp_xxxxxxxxxxxxxxxxxxxx",
+      "githubTokenHelp": "Token needs 'read:packages' and 'write:packages' permissions",
+      "githubOrgLabel": "Organization/Username",
+      "githubOrgPlaceholder": "myorg or myusername",
+      "githubRepoLabel": "Repository (optional)",
+      "githubRepoPlaceholder": "my-package-repo",
+      "comingSoon": "🚧 Configuration for {{provider}} is coming soon. Please use S3 or GitHub for now."
+    },
+    "infoBox": {
+      "title": "Repository will be created with:",
+      "defaultQuota": "Default storage quota: 100GB",
+      "cleanupPolicies": "Automatic cleanup policies",
+      "retentionPeriod": "Retention period: 30 days for snapshots",
+      "encryption": "<strong>AES-256-GCM encryption</strong> for all artifacts (enforced)",
+      "cloudStorage": "Cloud storage: {{provider}}"
+    }
+  },
+  "validation": {
+    "repositoryNameRequired": "Repository name is required",
+    "repositoryNameTooShort": "Name must be at least 3 characters",
+    "repositoryNameInvalid": "Repository name must contain only lowercase letters, numbers, and hyphens",
+    "repositoryNameTaken": "This repository name is already in use",
+    "remoteUrlRequired": "Remote URL is required for remote repositories",
+    "remoteUrlInvalid": "Please enter a valid URL",
+    "fillS3Fields": "Please fill in all required S3 configuration fields.",
+    "awsRegionRequired": "AWS region is required for Amazon S3.",
+    "customEndpointRequired": "Custom endpoint is required for S3-compatible storage.",
+    "fillGithubFields": "Please fill in GitHub token and organization/username.",
+    "fillEcrFields": "Please fill in all required AWS ECR configuration fields."
+  },
+  "errors": {
+    "failedToCreate": "Failed to create repository: {{message}}"
+  },
+  "list": {
+    "noRepositories": "No repositories found",
+    "searchPlaceholder": "Search repositories...",
+    "count": "{{count}} repository",
+    "count_plural": "{{count}} repositories"
+  },
+  "settings": {
+    "general": "General Settings",
+    "storage": "Storage Settings",
+    "cache": "Cache Settings",
+    "replication": "Replication",
+    "access": "Access Control",
+    "security": "Security"
+  },
+  "storage": {
+    "used": "Storage Used",
+    "available": "Available",
+    "quota": "Storage Quota",
+    "unlimited": "Unlimited"
+  },
+  "cache": {
+    "enabled": "Cache Enabled",
+    "disabled": "Cache Disabled",
+    "ttl": "Cache TTL",
+    "clearCache": "Clear Cache",
+    "cacheCleared": "Cache cleared successfully",
+    "title": "Cache Management"
+  },
+  "repositoryActions": {
+    "view": "View Repository",
+    "edit": "Edit Repository",
+    "delete": "Delete Repository",
+    "configure": "Configure",
+    "browse": "Browse Artifacts",
+    "sync": "Synchronize",
+    "enable": "Enable",
+    "disable": "Disable",
+    "create": "Create Repository"
+  }
+}

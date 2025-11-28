@@ -1,0 +1,45 @@
+{
+  "title": "Notifications",
+  "subtitle": "Manage your notifications",
+  "types": {
+    "security": "Security Alert",
+    "scan": "Scan Result",
+    "compliance": "Compliance",
+    "system": "System",
+    "artifact": "Artifact",
+    "alert": "Alert",
+    "info": "Information"
+  },
+  "priorities": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "info": "Info"
+  },
+  "center": {
+    "title": "Notifications Center",
+    "markAllRead": "Mark All as Read",
+    "clearAll": "Clear All",
+    "noNotifications": "No notifications",
+    "unread": "{{count}} unread",
+    "showUnread": "Show Unread Only",
+    "showAll": "Show All"
+  },
+  "preferences": {
+    "title": "Notification Preferences",
+    "email": "Email Notifications",
+    "push": "Push Notifications",
+    "inApp": "In-App Notifications",
+    "securityAlerts": "Security Alerts",
+    "scanResults": "Scan Results",
+    "complianceUpdates": "Compliance Updates",
+    "systemUpdates": "System Updates"
+  },
+  "actions": {
+    "markAsRead": "Mark as Read",
+    "markAsUnread": "Mark as Unread",
+    "delete": "Delete",
+    "viewDetails": "View Details"
+  }
+}

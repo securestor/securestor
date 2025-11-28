@@ -1,0 +1,82 @@
+{
+  "network": {
+    "offline": "You are currently offline",
+    "connectionLost": "Connection lost. Please check your internet connection",
+    "timeout": "Network request timed out",
+    "serverUnavailable": "Server is currently unavailable",
+    "slowConnection": "Slow network connection detected"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalid": "Invalid input",
+    "tooShort": "Input is too short",
+    "tooLong": "Input is too long",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidUrl": "Please enter a valid URL",
+    "invalidFormat": "Invalid format",
+    "mustMatch": "Fields must match",
+    "min": "Minimum value is {{min}}",
+    "max": "Maximum value is {{max}}"
+  },
+  "api": {
+    "unauthorized": "Unauthorized. Please login again",
+    "forbidden": "You don't have permission to perform this action",
+    "notFound": "Resource not found",
+    "conflict": "Resource already exists",
+    "serverError": "Internal server error",
+    "badRequest": "Bad request. Please check your input",
+    "tooManyRequests": "Too many requests. Please try again later",
+    "serviceUnavailable": "Service temporarily unavailable"
+  },
+  "file": {
+    "uploadFailed": "File upload failed",
+    "downloadFailed": "File download failed",
+    "tooLarge": "File is too large. Maximum size is {{maxSize}}",
+    "unsupportedType": "Unsupported file type",
+    "corruptedFile": "File appears to be corrupted",
+    "notFound": "File not found"
+  },
+  "artifact": {
+    "uploadFailed": "Failed to upload artifact",
+    "downloadFailed": "Failed to download artifact",
+    "deleteFailed": "Failed to delete artifact",
+    "scanFailed": "Failed to scan artifact",
+    "notFound": "Artifact not found",
+    "alreadyExists": "Artifact already exists"
+  },
+  "repository": {
+    "createFailed": "Failed to create repository",
+    "updateFailed": "Failed to update repository",
+    "deleteFailed": "Failed to delete repository",
+    "notFound": "Repository not found",
+    "accessDenied": "Access denied to repository"
+  },
+  "scan": {
+    "initiateFailed": "Failed to initiate scan",
+    "alreadyInProgress": "Scan is already in progress",
+    "failed": "Scan failed",
+    "timeout": "Scan timed out"
+  },
+  "compliance": {
+    "checkFailed": "Compliance check failed",
+    "policyViolation": "Policy violation detected",
+    "auditFailed": "Audit operation failed"
+  },
+  "auth": {
+    "loginFailed": "Login failed",
+    "logoutFailed": "Logout failed",
+    "sessionExpired": "Your session has expired. Please login again",
+    "invalidCredentials": "Invalid credentials",
+    "accountLocked": "Account has been locked",
+    "mfaRequired": "Two-factor authentication required",
+    "mfaFailed": "Two-factor authentication failed"
+  },
+  "general": {
+    "unknownError": "An unknown error occurred",
+    "tryAgain": "Please try again",
+    "contactSupport": "If the problem persists, please contact support",
+    "operationFailed": "Operation failed",
+    "loadFailed": "Failed to load data",
+    "saveFailed": "Failed to save changes"
+  }
+}

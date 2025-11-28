@@ -1,0 +1,71 @@
+{
+  "page": {
+    "title": "Cache Management",
+    "description": "View and manage cached artifacts across all cache levels"
+  },
+  "stats": {
+    "l1Cache": "L1 Cache (Redis)",
+    "l2Cache": "L2 Cache (Disk)",
+    "l3Cache": "L3 Cache (Cloud)",
+    "databaseTracking": "Database Tracking",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "pendingScans": "Pending Scans",
+    "quarantinedItems": "Quarantined Items",
+    "avgHitCount": "Avg Hit Count"
+  },
+  "filters": {
+    "allTypes": "All Types",
+    "maven": "Maven",
+    "npm": "npm",
+    "pypi": "PyPI",
+    "helm": "Helm",
+    "docker": "Docker",
+    "allLevels": "All Levels",
+    "l1Redis": "L1 (Redis)",
+    "l2Disk": "L2 (Disk)",
+    "l3Cloud": "L3 (Cloud)"
+  },
+  "buttons": {
+    "refresh": "Refresh",
+    "evictUnused": "Evict Unused",
+    "cleanupExpired": "Cleanup Expired",
+    "clearAll": "Clear All",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "table": {
+    "artifactPath": "Artifact Path",
+    "type": "Type",
+    "cacheLevel": "Cache Level",
+    "size": "Size",
+    "hits": "Hits",
+    "lastAccessed": "Last Accessed",
+    "scanStatus": "Scan Status",
+    "actions": "Actions"
+  },
+  "actions": {
+    "scan": "Scan artifact",
+    "download": "Download artifact",
+    "remove": "Remove from cache"
+  },
+  "messages": {
+    "loading": "Loading cache items...",
+    "noItems": "No cached items found",
+    "page": "Page",
+    "of": "of",
+    "scanFailed": "Failed to scan",
+    "downloadFailed": "Failed to download",
+    "deleteFailed": "Failed to delete",
+    "confirmDelete": "Delete cached item",
+    "confirmFlush": "Clear ALL cache? This cannot be undone!",
+    "flushSuccess": "Cache cleared successfully",
+    "flushFailed": "Failed to flush cache",
+    "evictPrompt": "Delete items not accessed in how many days?",
+    "evictSuccess": "Successfully removed {{count}} cached items",
+    "evictFailed": "Failed to evict unused cache",
+    "confirmCleanup": "Delete all expired cached items?",
+    "cleanupSuccess": "Successfully removed {{count}} expired items",
+    "cleanupFailed": "Failed to cleanup cache"
+  }
+}

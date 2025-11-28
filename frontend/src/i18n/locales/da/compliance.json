@@ -1,0 +1,106 @@
+{
+  "page": {
+    "title": "Databeskyttelse & Politikhåndhævelse",
+    "description": "Omfattende compliance-styring med dataopbevaring, juridiske holds, revisionslogfiler og politikhåndhævelse"
+  },
+  "title": "Compliance",
+  "tabs": {
+    "dashboard": "Compliance-dashboard",
+    "policies": "Dataopbevaringspolitikker",
+    "legalHolds": "Juridiske Holds",
+    "erasure": "Datasletningsanmodninger",
+    "audit": "Revisionslogfiler",
+    "policyEditor": "Politikeditor (OPA)",
+    "scheduler": "Automatiseringsplanlægger"
+  },
+  "status": {
+    "compliant": "Compliant",
+    "nonCompliant": "Ikke-compliant",
+    "review": "Under gennemgang",
+    "policyViolation": "Politikovertrædelse",
+    "underLegalHold": "Under juridisk hold",
+    "gdprErasureRequested": "GDPR-sletning anmodet",
+    "retentionExpired": "Opbevaring udløbet"
+  },
+  "policies": {
+    "title": "Compliance-politikker",
+    "createPolicy": "Opret politik",
+    "editPolicy": "Rediger politik",
+    "deletePolicy": "Slet politik",
+    "policyName": "Politiknavn",
+    "policyType": "Politiktype",
+    "policyRules": "Politikregler",
+    "enabled": "Aktiveret",
+    "disabled": "Deaktiveret"
+  },
+  "audit": {
+    "title": "Revisionlog",
+    "viewLog": "Se log",
+    "exportLog": "Eksporter log",
+    "action": "Handling",
+    "user": "Bruger",
+    "timestamp": "Tidsstempel",
+    "details": "Detaljer",
+    "noEntries": "Ingen logposter"
+  },
+  "gdpr": {
+    "title": "GDPR",
+    "dataErasure": "Datasletning",
+    "rightToAccess": "Ret til adgang",
+    "rightToPortability": "Ret til dataportabilitet",
+    "requestErasure": "Anmod om sletning",
+    "requestData": "Anmod om data",
+    "exportData": "Eksporter data"
+  },
+  "retention": {
+    "title": "Dataopbevaring",
+    "retentionPeriod": "Opbevaringsperiode",
+    "expiryDate": "Udløbsdato",
+    "autoDelete": "Automatisk sletning",
+    "retentionPolicy": "Opbevaringspolitik"
+  },
+  "legalHold": {
+    "title": "Juridisk hold",
+    "placeLegalHold": "Placer juridisk hold",
+    "releaseLegalHold": "Frigiv juridisk hold",
+    "reason": "Årsag",
+    "caseName": "Sagsnavn",
+    "caseNumber": "Sagsnummer",
+    "active": "Aktiv",
+    "released": "Frigivet"
+  },
+  "report": {
+    "title": "Compliance-rapport",
+    "summary": "Oversigt",
+    "overallCompliance": "Samlet compliance",
+    "policyViolations": "Politikovertrædelser",
+    "pendingActions": "Ventende handlinger",
+    "generateReport": "Generer rapport",
+    "exportReport": "Eksporter rapport"
+  },
+  "actions": {
+    "reviewCompliance": "Gennemgå compliance",
+    "applyPolicy": "Anvend politik",
+    "revokePolicy": "Tilbagekald politik",
+    "exportAuditLog": "Eksporter revisionlog"
+  },
+  "messages": {
+    "loadDataFailed": "Kunne ikke indlæse compliance-data",
+    "loadStatsFailed": "Kunne ikke indlæse compliance-statistikker",
+    "loadPoliciesFailed": "Kunne ikke indlæse compliance-politikker",
+    "loadLegalHoldsFailed": "Kunne ikke indlæse juridiske holds",
+    "loadErasureRequestsFailed": "Kunne ikke indlæse datasletningsanmodninger",
+    "loadAuditLogsFailed": "Kunne ikke indlæse revisionslogfiler",
+    "releaseLegalHoldFailed": "Kunne ikke frigive juridisk hold",
+    "policyCreated": "Compliance-politik oprettet med succes",
+    "policyUpdated": "Politik opdateret med succes",
+    "policyDeleted": "Politik slettet med succes",
+    "legalHoldCreated": "Juridisk hold oprettet med succes",
+    "legalHoldReleased": "Juridisk hold frigivet med succes",
+    "erasureRequestCreated": "Datasletningsanmodning oprettet med succes",
+    "erasureRequestApproved": "Datasletningsanmodning godkendt",
+    "erasureRequestRejected": "Datasletningsanmodning afvist",
+    "confirmDeletePolicy": "Er du sikker på, at du vil slette denne politik?",
+    "confirmReleaseLegalHold": "Er du sikker på, at du vil frigive dette juridiske hold?"
+  }
+}

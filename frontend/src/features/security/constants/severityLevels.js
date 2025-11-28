@@ -1,0 +1,22 @@
+export const SEVERITY_LEVELS = {
+  CRITICAL: 'critical',
+  HIGH: 'high',
+  MEDIUM: 'medium',
+  LOW: 'low',
+  UNKNOWN: 'unknown'
+};
+
+export const SEVERITY_ORDER = [
+  SEVERITY_LEVELS.CRITICAL,
+  SEVERITY_LEVELS.HIGH,
+  SEVERITY_LEVELS.MEDIUM,
+  SEVERITY_LEVELS.LOW
+];
+
+export const SEVERITY_LABELS = {
+  [SEVERITY_LEVELS.CRITICAL]: 'Critical',
+  [SEVERITY_LEVELS.HIGH]: 'High',
+  [SEVERITY_LEVELS.MEDIUM]: 'Medium',
+  [SEVERITY_LEVELS.LOW]: 'Low',
+  [SEVERITY_LEVELS.UNKNOWN]: 'Unknown'
+};

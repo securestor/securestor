@@ -1,0 +1,192 @@
+.replication-node-table-container {
+  margin-bottom: 24px;
+}
+
+.replication-node-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.replication-node-table thead {
+  background: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+}
+
+.replication-node-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+.replication-node-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  color: #666;
+}
+
+.replication-node-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.replication-node-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.replication-node-table tbody tr.inactive {
+  opacity: 0.7;
+  background-color: #fafafa;
+}
+
+.replication-node-table .path-cell {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.replication-node-table code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #555;
+}
+
+.replication-node-table .priority-badge {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #0066cc;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.replication-node-table .status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.replication-node-table .status-badge.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.replication-node-table .status-badge.inactive {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.replication-node-table .health-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.replication-node-table .health-badge.healthy {
+  background: #c8e6c9;
+  color: #1b5e20;
+}
+
+.replication-node-table .health-badge.unhealthy {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+.replication-node-table .health-status-text {
+  color: #999;
+  font-size: 12px;
+}
+
+.replication-node-table .timestamp {
+  color: #999;
+  font-size: 12px;
+}
+
+.replication-node-table .actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.replication-node-table .btn-small {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.replication-node-table .btn-edit {
+  background: #e3f2fd;
+  color: #0066cc;
+}
+
+.replication-node-table .btn-edit:hover {
+  background: #0066cc;
+  color: white;
+}
+
+.replication-node-table .btn-delete {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.replication-node-table .btn-delete:hover {
+  background: #d32f2f;
+  color: white;
+}
+
+.replication-node-table .table-footer {
+  background: #f5f5f5;
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  color: #666;
+}
+
+.replication-node-table .table-footer p {
+  margin: 0;
+}
+
+.replication-node-table .table-footer strong {
+  color: #333;
+  margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .replication-node-table {
+    font-size: 12px;
+  }
+
+  .replication-node-table th,
+  .replication-node-table td {
+    padding: 10px 12px;
+  }
+
+  .replication-node-table .path-cell {
+    max-width: 150px;
+  }
+
+  .replication-node-table .actions-cell {
+    flex-direction: column;
+  }
+
+  .replication-node-table .table-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

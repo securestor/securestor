@@ -1,0 +1,43 @@
+{
+  "title": "டாஷ்போர்டு கண்ணோட்டம்",
+  "subtitle": "நிறுவன கலைப்பொருள் களஞ்சிய மேலாண்மை",
+  "lastUpdated": "கடைசியாக புதுப்பிக்கப்பட்டது: {{time}}",
+  "stats": {
+    "totalRepositories": "மொத்த களஞ்சியங்கள்",
+    "totalRepositoriesSubtitle": "அனைத்து சேமிப்பக வகைகளிலும்",
+    "totalArtifacts": "மொத்த கலைப்பொருட்கள்",
+    "totalArtifactsSubtitle": "நிர்வகிக்கப்படும் தொகுப்புகள்",
+    "storageUsed": "பயன்படுத்திய சேமிப்பகம்",
+    "storageUsedSubtitle": "அனைத்து களஞ்சியங்களிலும்",
+    "systemHealth": "கணினி நலம்",
+    "systemHealthSubtitle": "{{total}} களஞ்சியங்களில் {{healthy}} ஆரோக்கியமானவை",
+    "noRepositories": "இன்னும் களஞ்சியங்கள் இல்லை"
+  },
+  "storageDistribution": {
+    "title": "சேமிப்பக விநியோகம்",
+    "localStorage": "உள்ளூர் சேமிப்பகம்",
+    "localStorageDesc": "வளாக களஞ்சியங்கள்",
+    "remoteProxy": "தொலைநிலை ப்ராக்ஸி",
+    "remoteProxyDesc": "அப்ஸ்ட்ரீம் பதிவு கண்ணாடிகள்",
+    "cloudStorage": "கிளவுட் சேமிப்பகம்",
+    "cloudStorageDesc": "S3, GCS, Azure Blob"
+  },
+  "repositoryHealth": {
+    "title": "களஞ்சிய நலம்",
+    "healthy": "ஆரோக்கியமான",
+    "activeRepositories": "செயலில் உள்ள களஞ்சியங்கள்",
+    "totalRepositories": "மொத்த களஞ்சியங்கள்"
+  },
+  "quickInsights": {
+    "title": "விரைவான நுண்ணறிவுகள்",
+    "remoteProxies": "தொலைநிலை ப்ராக்ஸிகள்",
+    "remoteProxiesDesc": "{{count}} பதிவு கட்டமைக்கப்பட்டது",
+    "remoteProxiesDesc_plural": "{{count}} பதிவுகள் கட்டமைக்கப்பட்டன",
+    "cloudIntegration": "கிளவுட் ஒருங்கிணைப்பு",
+    "cloudIntegrationDesc": "{{count}} கிளவுட் சேமிப்பக பக்கெட்",
+    "cloudIntegrationDesc_plural": "{{count}} கிளவுட் சேமிப்பக பக்கெட்டுகள்",
+    "localStorage": "உள்ளூர் சேமிப்பகம்",
+    "localStorageDesc": "{{count}} வளாக களஞ்சியம்",
+    "localStorageDesc_plural": "{{count}} வளாக களஞ்சியங்கள்"
+  }
+}

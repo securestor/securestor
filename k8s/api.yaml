@@ -1,0 +1,169 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: securestor
+  labels:
+    app: api
+spec:
+  selector:
+    app: api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: securestor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: securestor/api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: DATABASE_URL
+          value: postgresql://securestor:securestor123@postgres-primary-0.postgres-primary.securestor.svc.cluster.local:5432/securestor?sslmode=disable
+        - name: DATABASE_REPLICA_URL
+          value: postgresql://securestor:securestor123@postgres-standby-0.postgres-standby.securestor.svc.cluster.local:5432/securestor?sslmode=disable
+        - name: REDIS_URL
+          value: redis://:redis123@redis-master-0.redis-master.securestor.svc.cluster.local:6379/0
+        - name: REDIS_SENTINEL_URL
+          value: redis-sentinel-0.redis-sentinel.securestor.svc.cluster.local:26379,redis-sentinel-1.redis-sentinel.securestor.svc.cluster.local:26379,redis-sentinel-2.redis-sentinel.securestor.svc.cluster.local:26379
+        - name: REDIS_SENTINEL_MASTER
+          value: mymaster
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: securestor-secrets
+              key: jwt-secret
+        - name: ENVIRONMENT
+          value: kubernetes-ha
+        - name: STORAGE_PATH
+          value: /app/storage
+        - name: MAX_FILE_SIZE
+          value: "524288000"
+        - name: ERASURE_DATA_SHARDS
+          value: "6"
+        - name: ERASURE_PARITY_SHARDS
+          value: "3"
+        - name: PYTHONPATH
+          value: /opt/python-tools
+        - name: SCANNER_TIMEOUT
+          value: "600"
+        - name: ENABLE_SECURITY_SCANNING
+          value: "true"
+        - name: OPA_URL
+          value: http://opa-service.securestor.svc.cluster.local:8181
+        - name: OPA_ENABLED
+          value: "true"
+        - name: REDIS_CACHE_TTL
+          value: "3600"
+        - name: REDIS_SESSION_TTL
+          value: "86400"
+        - name: ENCRYPTION_ENABLED
+          value: "true"
+        - name: ENCRYPTION_ENFORCED
+          value: "true"
+        - name: ENCRYPTION_MODE
+          value: mock
+        - name: KEY_CACHE_TTL_MINUTES
+          value: "5"
+        - name: KEY_ROTATION_DAYS
+          value: "90"
+        - name: AWS_KMS_KEY_ID
+          value: alias/securestor-master-key
+        - name: AWS_REGION
+          value: us-east-1
+        volumeMounts:
+        - name: storage
+          mountPath: /app/storage
+        - name: logs
+          mountPath: /app/logs
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health/live
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health/ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: api-storage
+      - name: logs
+        emptyDir: {}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+  namespace: securestor
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 30
+      - type: Pods
+        value: 2
+        periodSeconds: 30
+      selectPolicy: Max

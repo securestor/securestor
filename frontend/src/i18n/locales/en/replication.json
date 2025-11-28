@@ -1,0 +1,156 @@
+{
+  "page": {
+    "title": "Replication Settings",
+    "description": "Configure global replication defaults and manage storage nodes for high availability"
+  },
+  "buttons": {
+    "refresh": "Refresh",
+    "saveConfiguration": "Save Configuration",
+    "refreshAll": "Refresh All",
+    "addNode": "Add Node",
+    "addFirstNode": "Add Your First Node",
+    "cancel": "Cancel",
+    "updateNode": "Update Node",
+    "saving": "Saving...",
+    "checkNow": "Check now"
+  },
+  "loading": "Loading...",
+  "config": {
+    "title": "Replication Configuration",
+    "description": "Configure global replication settings for your storage nodes. The system requires a quorum of {{quorumSize}} nodes for write operations.",
+    "defaultQuorumSize": {
+      "label": "Default Quorum Size",
+      "help": "Number of nodes required for write quorum (1-5)"
+    },
+    "syncFrequency": {
+      "label": "Sync Frequency",
+      "help": "How often to synchronize data across nodes",
+      "options": {
+        "realtime": "Real-time",
+        "hourly": "Hourly",
+        "daily": "Daily",
+        "weekly": "Weekly"
+      }
+    },
+    "healthCheckInterval": {
+      "label": "Health Check Interval (seconds)",
+      "help": "Interval for node health checks (10-300 seconds)"
+    },
+    "failoverTimeout": {
+      "label": "Failover Timeout (seconds)",
+      "help": "Timeout for node failover (5-300 seconds)"
+    },
+    "enabled": "Enable Replication"
+  },
+  "nodes": {
+    "title": "Storage Nodes",
+    "emptyTitle": "No storage nodes configured",
+    "emptyDescription": "Click \"Add Node\" to configure your first storage node",
+    "table": {
+      "status": "Status",
+      "name": "Name",
+      "path": "Path",
+      "storageUsage": "Storage Usage",
+      "files": "Files",
+      "priority": "Priority",
+      "lastSync": "Last Sync",
+      "actions": "Actions"
+    },
+    "priority": {
+      "high": "(High)",
+      "normal": "(Normal)",
+      "low": "(Low)"
+    },
+    "noData": "No data",
+    "tooltips": {
+      "refreshAll": "Check health and storage for all nodes",
+      "checkHealth": "Check Health",
+      "runHealthCheck": "Run health check to collect storage metrics",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "summary": {
+    "totalNodes": "Total Nodes",
+    "healthyNodes": "Healthy Nodes",
+    "totalCapacity": "Total Capacity",
+    "usedSpace": "Used Space"
+  },
+  "dialog": {
+    "addTitle": "Add Storage Node",
+    "editTitle": "Edit Storage Node",
+    "nodeName": {
+      "label": "Node Name",
+      "placeholder": "e.g., storage-node-1",
+      "help": "Node name cannot be changed"
+    },
+    "nodeType": {
+      "label": "Node Type",
+      "help": "Node type cannot be changed",
+      "options": {
+        "local": "Local Filesystem",
+        "s3": "AWS S3",
+        "minio": "MinIO (S3-compatible)",
+        "gcs": "Google Cloud Storage",
+        "azure": "Azure Blob Storage"
+      }
+    },
+    "storagePath": {
+      "label": "Storage Path",
+      "placeholder": "e.g., /app/storage/node1",
+      "help": "Absolute path to storage directory"
+    },
+    "s3Endpoint": {
+      "label": "S3 Endpoint",
+      "placeholder": "e.g., http://127.0.0.1:9000",
+      "help": "S3-compatible endpoint URL (leave empty for AWS S3)"
+    },
+    "region": {
+      "label": "Region",
+      "placeholder": "us-east-1"
+    },
+    "bucketName": {
+      "label": "Bucket Name",
+      "placeholder": "replicate"
+    },
+    "accessKey": {
+      "label": "Access Key",
+      "placeholder": "Enter access key"
+    },
+    "secretKey": {
+      "label": "Secret Key",
+      "placeholder": "Enter secret key"
+    },
+    "pathPrefix": {
+      "label": "Path Prefix (Optional)",
+      "placeholder": "e.g., securestor/",
+      "help": "Optional prefix for objects within the bucket"
+    },
+    "useSsl": "Use SSL/TLS",
+    "priority": {
+      "label": "Priority",
+      "help": "Priority level (1-100): Higher values = higher priority"
+    },
+    "isActive": {
+      "label": "Node is Active",
+      "help": "Inactive nodes will not participate in replication"
+    },
+    "required": "*"
+  },
+  "messages": {
+    "loadError": "Failed to load replication settings",
+    "saveSuccess": "Configuration saved successfully!",
+    "saveFailed": "Failed to save configuration",
+    "nodeAddSuccess": "Storage node added successfully!",
+    "nodeUpdateSuccess": "Storage node updated successfully!",
+    "nodeSaveFailed": "Failed to save storage node",
+    "nodeDeleteSuccess": "Storage node deleted successfully!",
+    "nodeDeleteFailed": "Failed to delete storage node",
+    "syncSuccess": "Node synchronized successfully!",
+    "syncFailed": "Failed to synchronize node"
+  },
+  "healthStatus": {
+    "pathNotFound": "Storage path does not exist",
+    "pathInaccessible": "Storage path is not accessible"
+  }
+}

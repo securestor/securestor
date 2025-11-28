@@ -1,0 +1,98 @@
+{
+  "title": "Artefakter",
+  "types": {
+    "docker": "Docker-billede",
+    "npm": "NPM-pakke",
+    "maven": "Maven-artefakt",
+    "pypi": "PyPI-pakke",
+    "helm": "Helm-diagram",
+    "generic": "Generisk"
+  },
+  "actions": {
+    "upload": "Upload artefakt",
+    "download": "Download artefakt",
+    "delete": "Slet artefakt",
+    "scan": "Scan artefakt",
+    "viewDetails": "Se detaljer",
+    "viewVersions": "Se versioner",
+    "copyPath": "Kopier sti"
+  },
+  "list": {
+    "title": "Artefakter",
+    "noArtifacts": "Ingen artefakter endnu",
+    "searchPlaceholder": "Søg artefakter...",
+    "count": "{{count}} artefakt",
+    "count_plural": "{{count}} artefakter",
+    "showingResults": "Viser {{count}} af {{total}} artefakter"
+  },
+  "filters": {
+    "typeLabel": "Type",
+    "statusLabel": "Status",
+    "severityLabel": "Alvorlighed",
+    "repositoryLabel": "Repository",
+    "dateLabel": "Dato",
+    "clearFilters": "Ryd filtre"
+  },
+  "details": {
+    "title": "Artefaktdetaljer",
+    "generalInfo": "Generel information",
+    "metadata": "Metadata",
+    "versions": "Versioner",
+    "dependencies": "Afhængigheder",
+    "vulnerabilities": "Sårbarheder",
+    "compliance": "Compliance",
+    "downloads": "Downloads"
+  },
+  "metadata": {
+    "name": "Navn",
+    "version": "Version",
+    "size": "Størrelse",
+    "type": "Type",
+    "repository": "Repository",
+    "path": "Sti",
+    "checksum": "Checksum",
+    "uploadedBy": "Uploadet af",
+    "uploadedAt": "Uploadet",
+    "lastModified": "Sidst ændret",
+    "downloads": "Downloads"
+  },
+  "upload": {
+    "title": "Upload artefakt",
+    "selectFile": "Vælg fil",
+    "dropFile": "Træk og slip fil her",
+    "selectRepository": "Vælg repository",
+    "uploadButton": "Upload",
+    "uploading": "Uploader...",
+    "success": "Artefakt uploadet succesfuldt",
+    "failed": "Upload fejlede"
+  },
+  "download": {
+    "downloading": "Downloader...",
+    "success": "Download fuldført",
+    "failed": "Download fejlede"
+  },
+  "delete": {
+    "confirmTitle": "Bekræft sletning",
+    "confirmMessage": "Er du sikker på, at du vil slette denne artefakt?",
+    "deleteButton": "Slet artefakt",
+    "deleting": "Sletter...",
+    "success": "Artefakt slettet succesfuldt",
+    "failed": "Sletning fejlede"
+  },
+  "scan": {
+    "title": "Scan artefakt",
+    "scanning": "Scanner...",
+    "completed": "Scan fuldført",
+    "failed": "Scan fejlede",
+    "noVulnerabilities": "Ingen sårbarheder fundet",
+    "vulnerabilitiesFound": "{{count}} sårbarhed fundet",
+    "vulnerabilitiesFound_plural": "{{count}} sårbarheder fundet"
+  },
+  "vulnerabilities": {
+    "critical": "Kritisk",
+    "high": "Høj",
+    "medium": "Mellem",
+    "low": "Lav",
+    "info": "Info"
+  }
+}

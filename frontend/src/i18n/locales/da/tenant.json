@@ -1,0 +1,29 @@
+{
+  "page": {
+    "title": "Virksomhedens lejerindstillinger",
+    "description": "Konfigurer avancerede lejerindstillinger og politikker"
+  },
+  "tabs": {
+    "general": "Generelt",
+    "security": "Sikkerhed",
+    "compliance": "Compliance",
+    "billing": "Fakturering",
+    "features": "Funktioner",
+    "monitoring": "Overvågning",
+    "advancedSecurity": "Avanceret sikkerhed"
+  },
+  "buttons": {
+    "validate": "Valider",
+    "cancel": "Annuller",
+    "saveAll": "Gem alle indstillinger",
+    "saving": "Gemmer..."
+  },
+  "messages": {
+    "loading": "Indlæser indstillinger...",
+    "unsavedChanges": "Du har ugemte ændringer",
+    "saveSuccess": "Indstillinger gemt med succes!",
+    "saveFailed": "Kunne ikke gemme indstillinger",
+    "loadFailed": "Kunne ikke indlæse lejerindstillinger",
+    "sectionSaveSuccess": "{{section}} indstillinger gemt med succes!"
+  }
+}

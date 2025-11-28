@@ -1,0 +1,80 @@
+{
+  "network": {
+    "offline": "Du er offline. Tjek venligst din internetforbindelse.",
+    "connectionLost": "Forbindelse mistet. Genoptager...",
+    "timeout": "Anmodning timeout. Prøv venligst igen.",
+    "serverUnavailable": "Server er utilgængelig. Prøv venligst senere.",
+    "slowConnection": "Langsom forbindelse opdaget"
+  },
+  "validation": {
+    "required": "Dette felt er påkrævet",
+    "invalid": "Ugyldig værdi",
+    "tooShort": "Værdi er for kort",
+    "tooLong": "Værdi er for lang",
+    "invalidEmail": "Ugyldig e-mail-adresse",
+    "invalidUrl": "Ugyldig URL",
+    "invalidFormat": "Ugyldigt format",
+    "passwordTooWeak": "Adgangskode er for svag",
+    "passwordMismatch": "Adgangskoder matcher ikke",
+    "min": "Minimumsværdi er {{min}}",
+    "max": "Maksimumværdi er {{max}}",
+    "minLength": "Minimumlængde er {{min}} tegn",
+    "maxLength": "Maksimumlængde er {{max}} tegn"
+  },
+  "api": {
+    "unauthorized": "Uautoriseret. Log venligst ind igen.",
+    "forbidden": "Du har ikke tilladelse til at udføre denne handling.",
+    "notFound": "Ressource ikke fundet",
+    "conflict": "Ressource eksisterer allerede",
+    "serverError": "Intern serverfejl. Prøv venligst senere.",
+    "badRequest": "Ugyldig anmodning",
+    "tooManyRequests": "For mange anmodninger. Prøv venligst senere."
+  },
+  "file": {
+    "uploadFailed": "Filupload fejlede",
+    "downloadFailed": "Fildownload fejlede",
+    "tooLarge": "Fil er for stor. Maksimal størrelse er {{maxSize}}",
+    "unsupportedType": "Filtype understøttes ikke",
+    "corruptedFile": "Fil er beskadiget eller ugyldig"
+  },
+  "artifact": {
+    "uploadFailed": "Artefaktupload fejlede",
+    "downloadFailed": "Artefaktdownload fejlede",
+    "deleteFailed": "Artefaktsletning fejlede",
+    "notFound": "Artefakt ikke fundet",
+    "alreadyExists": "Artefakt eksisterer allerede",
+    "invalidChecksum": "Ugyldig checksum"
+  },
+  "repository": {
+    "createFailed": "Repository-oprettelse fejlede",
+    "updateFailed": "Repository-opdatering fejlede",
+    "deleteFailed": "Repository-sletning fejlede",
+    "notFound": "Repository ikke fundet",
+    "alreadyExists": "Repository eksisterer allerede"
+  },
+  "scan": {
+    "failed": "Scanning fejlede",
+    "timeout": "Scanning timeout",
+    "scannerUnavailable": "Scanner utilgængelig",
+    "invalidArtifact": "Ugyldig artefakt til scanning"
+  },
+  "compliance": {
+    "policyViolation": "Politikovertrædelse opdaget",
+    "checkFailed": "Compliance-tjek fejlede",
+    "reportFailed": "Rapport-generering fejlede"
+  },
+  "auth": {
+    "loginFailed": "Login fejlede",
+    "sessionExpired": "Din session er udløbet. Log venligst ind igen.",
+    "accountLocked": "Din konto er blevet låst",
+    "accountDisabled": "Din konto er blevet deaktiveret",
+    "mfaRequired": "To-faktor autentificering påkrævet",
+    "mfaFailed": "To-faktor autentificering fejlede"
+  },
+  "general": {
+    "unknownError": "Der opstod en ukendt fejl",
+    "operationFailed": "Operation fejlede",
+    "tryAgain": "Prøv venligst igen",
+    "contactSupport": "Hvis problemet fortsætter, kontakt venligst support"
+  }
+}

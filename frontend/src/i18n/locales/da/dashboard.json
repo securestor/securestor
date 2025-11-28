@@ -1,0 +1,43 @@
+{
+  "title": "Dashboard Oversigt",
+  "subtitle": "Enterprise artefakt repository administration",
+  "lastUpdated": "Sidst opdateret: {{time}}",
+  "stats": {
+    "totalRepositories": "Samlede Repositorier",
+    "totalRepositoriesSubtitle": "På tværs af alle lagringstyper",
+    "totalArtifacts": "Samlede Artefakter",
+    "totalArtifactsSubtitle": "Administrerede pakker",
+    "storageUsed": "Anvendt Lager",
+    "storageUsedSubtitle": "På tværs af alle repositorier",
+    "systemHealth": "Systemsundhed",
+    "systemHealthSubtitle": "{{healthy}} af {{total}} repositorier er sunde",
+    "noRepositories": "Ingen repositorier endnu"
+  },
+  "storageDistribution": {
+    "title": "Lagerfordeling",
+    "localStorage": "Lokalt Lager",
+    "localStorageDesc": "On-premises repositorier",
+    "remoteProxy": "Remote Proxy",
+    "remoteProxyDesc": "Upstream registry mirrors",
+    "cloudStorage": "Cloud Lager",
+    "cloudStorageDesc": "S3, GCS, Azure Blob"
+  },
+  "repositoryHealth": {
+    "title": "Repository Sundhed",
+    "healthy": "Sund",
+    "activeRepositories": "Aktive Repositorier",
+    "totalRepositories": "Samlede Repositorier"
+  },
+  "quickInsights": {
+    "title": "Hurtige Indsigter",
+    "remoteProxies": "Remote Proxies",
+    "remoteProxiesDesc": "{{count}} registry konfigureret",
+    "remoteProxiesDesc_plural": "{{count}} registries konfigureret",
+    "cloudIntegration": "Cloud Integration",
+    "cloudIntegrationDesc": "{{count}} cloud storage bucket",
+    "cloudIntegrationDesc_plural": "{{count}} cloud storage buckets",
+    "localStorage": "Lokalt Lager",
+    "localStorageDesc": "{{count}} on-premises repository",
+    "localStorageDesc_plural": "{{count}} on-premises repositorier"
+  }
+}

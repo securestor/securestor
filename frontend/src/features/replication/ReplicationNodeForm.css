@@ -1,0 +1,215 @@
+.replication-node-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.replication-node-form {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.replication-node-form .form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.replication-node-form .form-header h4 {
+  margin: 0;
+  color: #222;
+  font-size: 16px;
+}
+
+.replication-node-form .close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.replication-node-form .close-btn:hover:not(:disabled) {
+  color: #333;
+}
+
+.replication-node-form .close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.replication-node-form form {
+  padding: 24px;
+}
+
+.replication-node-form .form-group {
+  margin-bottom: 20px;
+}
+
+.replication-node-form .form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.replication-node-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #222;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.replication-node-form .help-text {
+  display: block;
+  color: #999;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 2px;
+}
+
+.replication-node-form input[type='text'],
+.replication-node-form input[type='number'] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.replication-node-form input[type='text']:focus,
+.replication-node-form input[type='number']:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.replication-node-form .input-error {
+  border-color: #d32f2f;
+}
+
+.replication-node-form .error-text {
+  display: block;
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.replication-node-form .checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.replication-node-form .checkbox-group input[type='checkbox'] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.replication-node-form .checkbox-group label {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.replication-node-form .priority-input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.replication-node-form input[type='range'] {
+  flex: 1;
+  min-width: 150px;
+}
+
+.replication-node-form .number-input {
+  width: 80px;
+}
+
+.replication-node-form .form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.replication-node-form .btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.replication-node-form .btn-primary {
+  background: #0066cc;
+  color: white;
+}
+
+.replication-node-form .btn-primary:hover:not(:disabled) {
+  background: #0052a3;
+}
+
+.replication-node-form .btn-secondary {
+  background: #eee;
+  color: #333;
+}
+
+.replication-node-form .btn-secondary:hover:not(:disabled) {
+  background: #ddd;
+}
+
+.replication-node-form .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .replication-node-form-overlay {
+    padding: 0;
+  }
+
+  .replication-node-form {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .replication-node-form .form-header {
+    padding: 16px;
+  }
+
+  .replication-node-form form {
+    padding: 16px;
+  }
+}

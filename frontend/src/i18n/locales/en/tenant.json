@@ -1,0 +1,29 @@
+{
+  "page": {
+    "title": "Enterprise Tenant Settings",
+    "description": "Configure advanced tenant settings and policies"
+  },
+  "tabs": {
+    "general": "General",
+    "security": "Security",
+    "compliance": "Compliance",
+    "billing": "Billing",
+    "features": "Features",
+    "monitoring": "Monitoring",
+    "advancedSecurity": "Advanced Security"
+  },
+  "buttons": {
+    "validate": "Validate",
+    "cancel": "Cancel",
+    "saveAll": "Save All Settings",
+    "saving": "Saving..."
+  },
+  "messages": {
+    "loading": "Loading settings...",
+    "unsavedChanges": "You have unsaved changes",
+    "saveSuccess": "Settings saved successfully!",
+    "saveFailed": "Failed to save settings",
+    "loadFailed": "Failed to load tenant settings",
+    "sectionSaveSuccess": "{{section}} settings saved successfully!"
+  }
+}

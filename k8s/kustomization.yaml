@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: securestor
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - storage.yaml
+  - postgres.yaml
+  - redis.yaml
+  - api.yaml
+  - ingress.yaml
+  - services.yaml
+
+commonLabels:
+  app.kubernetes.io/name: securestor
+  app.kubernetes.io/version: "1.0.0"
+  app.kubernetes.io/managed-by: kustomize
+
+images:
+  - name: securestor/api
+    newName: your-registry/securestor-api
+    newTag: latest
+  - name: securestor/frontend
+    newName: your-registry/securestor-frontend
+    newTag: latest

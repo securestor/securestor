@@ -1,0 +1,98 @@
+{
+  "title": "கலைப்பொருட்கள்",
+  "types": {
+    "docker": "Docker உருவம்",
+    "npm": "NPM தொகுப்பு",
+    "maven": "Maven கலைப்பொருள்",
+    "pypi": "PyPI தொகுப்பு",
+    "helm": "Helm விளக்கப்படம்",
+    "generic": "பொதுவான"
+  },
+  "actions": {
+    "upload": "கலைப்பொருளைப் பதிவேற்று",
+    "download": "கலைப்பொருளைப் பதிவிறக்கு",
+    "delete": "கலைப்பொருளை அழி",
+    "scan": "கலைப்பொருளை ஸ்கேன் செய்",
+    "viewDetails": "விவரங்களைக் காண்க",
+    "viewVersions": "பதிப்புகளைக் காண்க",
+    "copyPath": "பாதையை நகலெடு"
+  },
+  "list": {
+    "title": "கலைப்பொருட்கள்",
+    "noArtifacts": "இன்னும் கலைப்பொருட்கள் இல்லை",
+    "searchPlaceholder": "கலைப்பொருட்களைத் தேடவும்...",
+    "count": "{{count}} கலைப்பொருள்",
+    "count_plural": "{{count}} கலைப்பொருட்கள்",
+    "showingResults": "மொத்தம் {{total}} இல் {{count}} கலைப்பொருட்களைக் காட்டுகிறது"
+  },
+  "filters": {
+    "typeLabel": "வகை",
+    "statusLabel": "நிலை",
+    "severityLabel": "தீவிரம்",
+    "repositoryLabel": "களஞ்சியம்",
+    "dateLabel": "தேதி",
+    "clearFilters": "வடிப்பான்களை அழி"
+  },
+  "details": {
+    "title": "கலைப்பொருள் விவரங்கள்",
+    "generalInfo": "பொதுவான தகவல்",
+    "metadata": "மெட்டாடேட்டா",
+    "versions": "பதிப்புகள்",
+    "dependencies": "சார்புகள்",
+    "vulnerabilities": "பாதிப்புகள்",
+    "compliance": "இணக்கம்",
+    "downloads": "பதிவிறக்கங்கள்"
+  },
+  "metadata": {
+    "name": "பெயர்",
+    "version": "பதிப்பு",
+    "size": "அளவு",
+    "type": "வகை",
+    "repository": "களஞ்சியம்",
+    "path": "பாதை",
+    "checksum": "சரிபார்ப்பு தொகை",
+    "uploadedBy": "பதிவேற்றியவர்",
+    "uploadedAt": "பதிவேற்றம்",
+    "lastModified": "கடைசியாக மாற்றப்பட்டது",
+    "downloads": "பதிவிறக்கங்கள்"
+  },
+  "upload": {
+    "title": "கலைப்பொருளைப் பதிவேற்று",
+    "selectFile": "கோப்பைத் தேர்ந்தெடு",
+    "dropFile": "கோப்பை இங்கே இழுத்து விடவும்",
+    "selectRepository": "களஞ்சியத்தைத் தேர்ந்தெடு",
+    "uploadButton": "பதிவேற்று",
+    "uploading": "பதிவேற்றுகிறது...",
+    "success": "கலைப்பொருள் வெற்றிகரமாக பதிவேற்றப்பட்டது",
+    "failed": "பதிவேற்றம் தோல்வியுற்றது"
+  },
+  "download": {
+    "downloading": "பதிவிறக்குகிறது...",
+    "success": "பதிவிறக்கம் முடிந்தது",
+    "failed": "பதிவிறக்கம் தோல்வியுற்றது"
+  },
+  "delete": {
+    "confirmTitle": "அழிப்பதை உறுதிப்படுத்தவும்",
+    "confirmMessage": "இந்த கலைப்பொருளை நிச்சயமாக அழிக்க விரும்புகிறீர்களா?",
+    "deleteButton": "கலைப்பொருளை அழி",
+    "deleting": "அழிக்கிறது...",
+    "success": "கலைப்பொருள் வெற்றிகரமாக அழிக்கப்பட்டது",
+    "failed": "அழித்தல் தோல்வியுற்றது"
+  },
+  "scan": {
+    "title": "கலைப்பொருளை ஸ்கேன் செய்",
+    "scanning": "ஸ்கேன் செய்கிறது...",
+    "completed": "ஸ்கேன் முடிந்தது",
+    "failed": "ஸ்கேன் தோல்வியுற்றது",
+    "noVulnerabilities": "பாதிப்புகள் இல்லை",
+    "vulnerabilitiesFound": "{{count}} பாதிப்பு கண்டறியப்பட்டது",
+    "vulnerabilitiesFound_plural": "{{count}} பாதிப்புகள் கண்டறியப்பட்டன"
+  },
+  "vulnerabilities": {
+    "critical": "முக்கியமான",
+    "high": "உயர்",
+    "medium": "நடுத்தர",
+    "low": "குறைவான",
+    "info": "தகவல்"
+  }
+}
