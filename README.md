@@ -411,8 +411,6 @@ Aggregate multiple repositories (local and remote) into a single unified endpoin
 
 ## 🔍 Advanced Features
 
-## 🔍 Advanced Features
-
 ### Metadata Search & Indexing
 Advanced search with filtering by artifact type, severity, license, date range, tags, and custom metadata.
 
