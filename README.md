@@ -91,24 +91,51 @@ docker-compose --profile ha up -d
 
 # Verify deployment
 curl http://localhost:8080/api/v1/health
+
+# ✨ First-time automatic setup runs automatically!
+# Check logs to see default admin credentials
+docker-compose logs api | grep "DEFAULT CREDENTIALS"
 ```
 
-### Initial Setup (Required - One Time Only)
+### 🎉 Automatic First-Time Setup
 
-After starting services for the first time, run these setup scripts:
+On first startup, SecureStor automatically creates:
+- ✅ Default admin tenant (`admin`)
+- ✅ Admin user with username `admin` and password `admin123`
+- ✅ 6 default roles (admin, developer, viewer, scanner, auditor, deployer)
+- ✅ 28 granular permissions
+- ✅ 11 OAuth2 scopes for API key authentication
+
+**Default Login Credentials:**
+```
+Username: admin
+Password: admin123
+Tenant:   admin
+```
+
+⚠️ **IMPORTANT**: You will be prompted to change the default password after first login. A warning banner will appear on the dashboard until the password is changed.
+
+### Manual Setup Scripts (Optional - Legacy)
+
+If you need to recreate the setup or run on existing databases:
 
 ```bash
-# 1. Create admin user and default tenant
+### Manual Setup Scripts (Optional - Legacy)
+
+If you need to recreate the setup or run on existing databases:
+
+```bash
+# 1. Create admin user and default tenant (optional - runs automatically)
 ./scripts/setup_admin.sh
 # You'll be prompted for username, email, and password
 
-# 2. Populate OAuth2 scopes (required for API key authentication)
+# 2. Populate OAuth2 scopes (optional - runs automatically)
 ./scripts/populate_scopes.sh
 
-# 3. Verify admin user was created
+# 3. Verify admin user
 curl -X POST http://localhost:8080/api/v1/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"your-password"}'
+  -d '{"username":"admin","password":"admin123","tenant":"admin"}'
 ```
 
 ### Production Security Setup

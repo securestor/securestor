@@ -51,7 +51,7 @@ const LoginForm = () => {
           </p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} autoComplete="off">
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="flex">
@@ -81,7 +81,7 @@ const LoginForm = () => {
                 id="username"
                 name="username"
                 type="text"
-                autoComplete="username"
+                autoComplete="off"
                 required
                 value={formData.username}
                 onChange={handleChange}
@@ -98,10 +98,11 @@ const LoginForm = () => {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="off"
                 required
                 value={formData.password}
                 onChange={handleChange}
+                data-form-type="other"
                 className="mt-1 block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 placeholder={t('login.passwordPlaceholder')}
               />
@@ -124,7 +125,7 @@ const LoginForm = () => {
                   <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               )}
-              {isLoading ? t('common:status.loading') : t('login.loginButton')}
+              {isLoading ? t('common:status.loading') : t('login.signInButton')}
             </button>
           </div>
 

@@ -56,7 +56,7 @@ func LoadEmailConfigFromEnv() EmailConfig {
 		SMTPPort:     port,
 		SMTPUsername: getEnvWithDefault("SMTP_USERNAME", ""),
 		SMTPPassword: getEnvWithDefault("SMTP_PASSWORD", ""),
-		FromEmail:    getEnvWithDefault("FROM_EMAIL", "noreply@securestor.local"),
+		FromEmail:    getEnvWithDefault("FROM_EMAIL", "noreply@securestor.io"),
 		FromName:     getEnvWithDefault("FROM_NAME", "SecurStor"),
 		BaseURL:      getEnvWithDefault("BASE_URL", "http://localhost:3000"),
 		TLSEnabled:   tlsEnabled,

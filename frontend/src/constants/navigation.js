@@ -24,8 +24,6 @@ const BASE_NAV_ITEMS = [
   { id: "security", icon: Shield, label: "Security Scan" },
   { id: "logs", icon: FileText, label: "Logs" },
   { id: "api-keys", icon: Key, label: "API Keys" },
-  // { id: 'builds', icon: Activity, label: 'Builds' },
-  // { id: "mfa-settings", icon: Shield, label: "MFA Settings" },
 ];
 
 // Enterprise-only navigation items

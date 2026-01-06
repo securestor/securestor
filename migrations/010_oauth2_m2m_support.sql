@@ -238,7 +238,7 @@ INSERT INTO oauth2_clients (
     'Test OAuth2 client for machine-to-machine authentication',
     ARRAY['client_credentials'],
     ARRAY['read', 'write', 'artifacts:read', 'artifacts:write', 'scans:read'],
-    (SELECT id FROM users WHERE username = 'admin@securestor.local' LIMIT 1)
+    (SELECT id FROM users WHERE username = 'admin@securestor.io' LIMIT 1)
 ) ON CONFLICT (client_id) DO NOTHING;
 
 COMMENT ON TABLE oauth2_clients IS 'OAuth2 clients for machine-to-machine authentication';

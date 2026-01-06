@@ -43,6 +43,11 @@ func SetupAuthRoutes(config *AuthRoutesConfig) {
 		// User info endpoint
 		protectedGroup.GET("/me", config.AuthHandler.Me)
 
+		// Setup status endpoints (for onboarding wizard)
+		setupHandler := handlers.NewSetupHandler(config.DB)
+		protectedGroup.GET("/auth/check-default-password", setupHandler.CheckDefaultPassword)
+		protectedGroup.GET("/setup/status", setupHandler.GetSetupStatus)
+
 		// Admin-only routes
 		adminGroup := protectedGroup.Group("/admin")
 		adminGroup.Use(config.JWTMiddleware.RequireRole("admin"))

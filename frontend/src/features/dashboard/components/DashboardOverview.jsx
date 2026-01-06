@@ -21,6 +21,8 @@ import { Card, CardHeader, CardContent } from '../../../components/common';
 import { useDashboard } from '../../../context/DashboardContext';
 import repositoryAPI from '../../../services/api/repositoryAPI';
 import { useTranslation } from '../../../hooks/useTranslation';
+import DefaultPasswordWarning from '../../../components/DefaultPasswordWarning';
+import SetupChecklist from '../../../components/SetupChecklist';
 
 // Constants moved outside component for better performance
 const HEALTHY_STATUSES = ['active', 'healthy', 'online'];
@@ -304,6 +306,12 @@ export const DashboardOverview = () => {
 
   return (
     <div className="space-y-6">
+      {/* Security Warning Banner */}
+      <DefaultPasswordWarning />
+
+      {/* Setup Checklist */}
+      <SetupChecklist />
+
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>

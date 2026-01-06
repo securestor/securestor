@@ -5,6 +5,10 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# Accept build argument for edition
+ARG REACT_APP_EDITION=community
+ENV REACT_APP_EDITION=${REACT_APP_EDITION}
+
 # Copy package files
 COPY package*.json ./
 

@@ -69,7 +69,7 @@
   "users": [
     {
       "username": "admin",
-      "email": "admin@securestor.local",
+      "email": "admin@securestor.io",
       "firstName": "Admin",
       "lastName": "User",
       "enabled": true,
@@ -86,7 +86,7 @@
     },
     {
       "username": "developer",
-      "email": "developer@securestor.local", 
+      "email": "developer@securestor.io", 
       "firstName": "Developer",
       "lastName": "User",
       "enabled": true,
@@ -103,7 +103,7 @@
     },
     {
       "username": "auditor",
-      "email": "auditor@securestor.local",
+      "email": "auditor@securestor.io",
       "firstName": "Auditor", 
       "lastName": "User",
       "enabled": true,

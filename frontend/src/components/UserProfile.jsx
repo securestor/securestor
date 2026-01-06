@@ -21,6 +21,7 @@ import {
 import { API_BASE_URL } from '../constants';
 import { useAuth } from '../context/AuthContext';
 import APIKeyManagement from './APIKeyManagement';
+import { ChangePasswordDialog } from './ChangePasswordDialog';
 
 const UserProfile = () => {
   const { user, getAuthHeaders } = useAuth();
@@ -32,6 +33,7 @@ const UserProfile = () => {
   const [success, setSuccess] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   
   // Profile form state
   const [profileForm, setProfileForm] = useState({
@@ -419,50 +421,17 @@ const UserProfile = () => {
                   
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Change Password</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Current Password
-                          </label>
-                          <input
-                            type="password"
-                            value={passwordForm.current_password}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, current_password: e.target.value })}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            New Password
-                          </label>
-                          <input
-                            type="password"
-                            value={passwordForm.new_password}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Confirm New Password
-                          </label>
-                          <input
-                            type="password"
-                            value={passwordForm.confirm_password}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <button
-                          onClick={handleChangePassword}
-                          disabled={loading || !passwordForm.current_password || !passwordForm.new_password || !passwordForm.confirm_password}
-                          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                        >
-                          <Lock className="w-4 h-4 mr-2" />
-                          Change Password
-                        </button>
-                      </div>
+                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Password Management</h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        Keep your account secure by regularly updating your password.
+                      </p>
+                      <button
+                        onClick={() => setShowPasswordDialog(true)}
+                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        <Lock className="w-4 h-4 mr-2" />
+                        Change Password
+                      </button>
                     </div>
 
                     <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
@@ -597,6 +566,17 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      
+      {/* Change Password Dialog */}
+      <ChangePasswordDialog
+        isOpen={showPasswordDialog}
+        onClose={() => setShowPasswordDialog(false)}
+        onSuccess={() => {
+          setShowPasswordDialog(false);
+          setSuccess('Password changed successfully!');
+          setTimeout(() => setSuccess(null), 5000);
+        }}
+      />
     </div>
   );
 };

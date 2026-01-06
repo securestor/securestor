@@ -89,7 +89,11 @@ export const AuthProvider = ({ children }) => {
       const response = await fetch(getApiUrl('/api/auth/login'), {
         method: 'POST',
         headers: getRequestHeaders(false),
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ 
+          username, 
+          password,
+          tenant: currentTenant === 'default' ? 'admin' : currentTenant
+        }),
       });
 
       if (!response.ok) {

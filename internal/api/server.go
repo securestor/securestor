@@ -664,6 +664,12 @@ func (s *Server) setupRoutes() {
 	s.logger.Printf("Registering user management routes...")
 	s.userManagementHandler.RegisterRoutes(apiV1)
 
+	// Register Setup/Onboarding routes
+	s.logger.Printf("Registering setup/onboarding routes...")
+	setupHandler := handlers.NewSetupHandler(s.db)
+	apiV1.GET("/auth/check-default-password", setupHandler.CheckDefaultPassword)
+	apiV1.GET("/setup/status", setupHandler.GetSetupStatus)
+
 	// Register API Key Management routes
 	s.logger.Printf("Registering API key management routes...")
 	s.apiKeyHandler.RegisterRoutes(apiV1)
