@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/securestor/securestor/blob/main/README.md
+    about: Please read the documentation before opening an issue.
