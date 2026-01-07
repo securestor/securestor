@@ -1,10 +1,39 @@
 # SecureStor
 
+<div align="center">
+
+![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)
+![Build Status](https://img.shields.io/github/actions/workflow/status/securestor/securestor/ci.yml?branch=main)
+![Go Version](https://img.shields.io/github/go-mod/go-version/securestor/securestor)
+![GitHub Stars](https://img.shields.io/github/stars/securestor/securestor?style=social)
+![Version](https://img.shields.io/github/v/release/securestor/securestor)
+
 **Enterprise-Grade Artifact Repository with Built-in Security & Compliance**
+
+[Features](#-key-features) • [Quick Start](#-quick-start) • [Documentation](https://docs.securestor.io) • [Enterprise](#enterprise-edition)
+
+</div>
+
+---
 
 > ⚠️ **BETA VERSION** - SecureStor is currently in beta. While stable for testing and development environments, we recommend thorough evaluation before production deployment. Community feedback and contributions are welcome!
 
-SecureStor is a modern artifact repository platform that combines high-performance storage with automated security scanning and compliance management. It provides a unified solution for managing Docker images, npm packages, Maven artifacts, PyPI packages, and Helm charts with built-in vulnerability detection and policy enforcement.
+## 🎯 What is SecureStor?
+
+SecureStor is an **all-in-one artifact repository platform** that combines secure storage, automated vulnerability scanning, and compliance management in a single solution. Built for DevSecOps teams who need to manage artifacts without sacrificing security.
+
+**Perfect for:**
+- 🏢 **DevOps Teams** managing multiple artifact types (Docker, npm, Maven, PyPI, Helm)
+- 🔒 **Security Teams** requiring automated vulnerability scanning and policy enforcement
+- 📋 **Compliance Officers** needing audit trails and compliance reporting
+- 🚀 **Startups to Enterprises** seeking cost-effective, self-hosted artifact management
+
+**Why SecureStor?**
+- ✅ **One Platform, Multiple Formats** - No need for separate tools for Docker, npm, Maven, etc.
+- 🔍 **Security Built-In** - Every artifact is automatically scanned for vulnerabilities
+- 📊 **Compliance Ready** - Audit logs, policy enforcement, and reports out-of-the-box
+- 💰 **Cost Effective** - Open source with optional enterprise features
+- ⚡ **High Performance** - Erasure coding, intelligent caching, and HA support
 
 ## 🌟 Editions
 
@@ -16,7 +45,7 @@ SecureStor is available in two editions:
 - ✅ Repository management with proxy caching
 - ✅ API key authentication
 - ✅ Audit logging and activity tracking
-- ✅ User profile and MFA settings
+- ✅ User profile
 - ✅ RESTful API with comprehensive documentation
 - ✅ High-performance storage with erasure coding
 - 📖 Open source under AGPL-3.0 license
@@ -63,39 +92,128 @@ For Enterprise edition inquiries: sales@securestor.io
 - **Bandwidth Optimization**: Reduce external registry dependencies
 - **Offline Mode**: Continue operations during network outages
 
-## 📋 Production Deployment
+## � Quick Start
+
+Get SecureStor running in under 5 minutes with Docker Compose.
 
 ### Prerequisites
-- Docker & Docker Compose
-- PostgreSQL 14+
-- Redis 7+ (Sentinel for HA)
-- Go 1.21+
-- Node.js 18+ (for frontend)
+- Docker 20.10+ and Docker Compose 2.0+
+- 4GB RAM minimum (8GB recommended)
+- 20GB disk space
 
-### Quick Start with Docker Compose
+### Installation
 
+```bash
+# 1. Clone the repository
+git clone https://github.com/securestor/securestor.git
+cd securestor
+
+# 2. Start all services (PostgreSQL, Redis, API, Frontend)
+docker-compose up -d
+
+# 3. Verify deployment
+curl http://localhost:8080/api/v1/health
+# Expected: {"status":"healthy"}
+
+# 4. Access the UI
+open http://localhost:3000
+```
+
+**Default Login Credentials:**
+```
+URL:      http://localhost:3000
+Username: admin
+Password: admin123
+Tenant:   admin
+```
 ```bash
 # Clone repository
 git clone https://github.com/securestor/securestor.git
 cd securestor
 
-# Configure environment
+# Configure production environment
 cp .env.example .env
-# Edit .env with your production settings
-
-# Start all services (basic setup)
-docker-compose up -d
+# Edit .env with production settings (see below)
 
 # Start with High Availability
 docker-compose --profile ha up -d
 
-# Verify deployment
-curl http://localhost:8080/api/v1/health
-
-# ✨ First-time automatic setup runs automatically!
 # Check logs to see default admin credentials
 docker-compose logs api | grep "DEFAULT CREDENTIALS"
 ```
+
+### 🎉 Automatic First-Time Setup
+
+On first startup, SecureStor automatically creates:
+- ✅ Default admin tenant (`admin`)
+- ✅ Admin user (username: `admin`, password: `admin123`)
+- ✅ 6 default roles (admin, developer, viewer, scanner, auditor, deployer)
+- ✅ 28 granular permissions
+- ✅ 11 OAuth2 scopes for API key authentication
+
+⚠️ **IMPORTANT**: Change the default password after first login. A warning banner will appear on the dashboard until
+# Pull the image
+docker pull localhost:8080/myapp:latest
+```
+
+#### Using as npm Registry
+
+```bash
+# Configure npm
+npm config set registry http://localhost:8080/npm
+
+# Login
+npm login --registry=http://localhost:8080/npm
+
+# Publish a package
+npm publish
+
+# Install packages
+npm install express
+```
+
+#### Using as Maven Repository
+
+```xml
+<!-- Add to pom.xml -->
+<repositories>
+  <repository>
+    <id>securestor</id>
+    <url>http://localhost:8080/maven</url>
+  </repository>
+</repositories>
+```
+
+#### Using as PyPI Repository
+
+```bash
+# Configure pip
+pip config set global.index-url http://localhost:8080/pypi/simple
+
+# Install packages
+pip install requests
+```
+
+### Next Steps
+
+- 📚 Read the [Full Documentation](https://docs.securestor.io)
+- 🔐 Set up [Authentication & Security](#-security-configuration)
+- 🏢 Explore [Enterprise Features](#enterprise-edition)
+- 🚀 Configure [High Availability](#-architecture)
+
+---
+
+## 📋 Production Deployment
+
+### Production Prerequisites
+- Docker & Docker Compose
+- PostgreSQL 14+
+- Redis 7+ (Sentinel for HA)
+- SSL/TLS certificates
+- 16GB RAM minimum
+- 100GB+ disk space
+
+### Production Installation
 
 ### 🎉 Automatic First-Time Setup
 
@@ -106,19 +224,13 @@ On first startup, SecureStor automatically creates:
 - ✅ 28 granular permissions
 - ✅ 11 OAuth2 scopes for API key authentication
 
-**Default Login Credentials:**
-```
-Username: admin
-Password: admin123
-Tenant:   admin
-```
-
-⚠️ **IMPORTANT**: You will be prompted to change the default password after first login. A warning banner will appear on the dashboard until the password is changed.
-
-### Manual Setup Scripts (Optional - Legacy)
+**Default Login Credentials:**)
 
 If you need to recreate the setup or run on existing databases:
 
+```bash
+# 1. Create admin user and default tenant (optional - runs automatically)
+./scripts/setup_admin.sh
 ```bash
 ### Manual Setup Scripts (Optional - Legacy)
 
@@ -514,22 +626,49 @@ SecureStor is licensed under the [AGPL-3.0 License](LICENSE).
 
 For commercial licensing and enterprise support, contact: support@securestor.io
 
+## 📖 Documentation
+
+### Deployment Guides
+- **[Docker Compose Deployment](docs/docker-deployment.md)** - Deploy with Docker Compose for development and small-scale production
+- **[Kubernetes Deployment](docs/kubernetes-deployment.md)** - Production-grade Kubernetes deployment with HA
+- **[Production Hardening](docs/production-hardening.md)** - Security hardening and best practices
+
+### User Guides
+- **[Getting Started](https://docs.securestor.io/getting-started)** - Quick start guide and basic usage
+- **[API Documentation](https://docs.securestor.io/api)** - Complete API reference
+- **[Security Guide](https://docs.securestor.io/security)** - Security features and configuration
+
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions from the community! Please read our guidelines before getting started.
+
+**Quick Links:**
+- **[Contributing Guide](CONTRIBUTING.md)** - Development setup, coding standards, and PR process
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines and expectations
+- **[GitHub Issues](https://github.com/securestor/securestor/issues)** - Report bugs or request features
+- **[GitHub Discussions](https://github.com/securestor/securestor/discussions)** - Ask questions and share ideas
+
+**How to Contribute:**
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Make your changes with clear commit messages
+4. Add tests for new functionality
+5. Ensure all tests pass (`go test ./...`)
+6. Update documentation as needed
+7. Push to your branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request with a clear description
+
+**Good First Issues**: Look for issues labeled `good first issue` to get started!
 
 ## 💬 Support
 
 - **Documentation**: https://docs.securestor.io
 - **Issues**: https://github.com/securestor/securestor/issues
 - **Discussions**: https://github.com/securestor/securestor/discussions
+- **Community Chat**: Coming soon
 - **Enterprise Support**: support@securestor.io
+- **Security Issues**: security@securestor.io (private disclosure)
 
 ## 🗓️ Roadmap
 
