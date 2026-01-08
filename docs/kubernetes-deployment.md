@@ -2,6 +2,8 @@
 
 This guide covers deploying SecureStor on Kubernetes for production-grade, scalable deployments.
 
+> **📝 Note:** For local development and testing with minikube, see the [Kubernetes Local Setup Guide](kubernetes-local-setup.md).
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
@@ -776,6 +778,7 @@ kubectl rollout undo deployment/securestor-api -n securestor
 ---
 
 **Next Steps:**
+- [Kubernetes Local Setup](kubernetes-local-setup.md) - Local development with minikube
 - [Production Hardening Guide](production-hardening.md)
 - [Monitoring & Observability](monitoring.md)
 - [Security Best Practices](security.md)

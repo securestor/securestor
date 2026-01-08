@@ -212,8 +212,16 @@ spec:
           - /bin/sh
           - -c
           - |
+            # Wait for Redis master to be ready
+            until redis-cli -h redis-master-0.redis-master.securestor.svc.cluster.local -a $REDIS_PASSWORD ping 2>/dev/null; do
+              echo "Waiting for Redis master..."
+              sleep 2
+            done
+            
             cat > /tmp/sentinel.conf <<EOF
             port 26379
+            sentinel resolve-hostnames yes
+            sentinel announce-hostnames yes
             sentinel monitor mymaster redis-master-0.redis-master.securestor.svc.cluster.local 6379 2
             sentinel auth-pass mymaster $REDIS_PASSWORD
             sentinel down-after-milliseconds mymaster 5000

@@ -251,6 +251,7 @@ spec:
       containers:
       - name: frontend
         image: securestor/frontend:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 3000
         env:
@@ -260,6 +261,10 @@ spec:
           value: http://api-service.securestor.svc.cluster.local:8080
         - name: REACT_APP_BACKEND_PORT
           value: "8080"
+        - name: REACT_APP_DEFAULT_TENANT
+          value: "admin"
+        - name: REACT_APP_DEV_MODE
+          value: "true"
         livenessProbe:
           httpGet:
             path: /health

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Eye, EyeOff, Lock, CheckCircle, AlertCircle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * ChangePasswordDialog - Modern dialog for changing user password
@@ -10,6 +11,7 @@ import { X, Eye, EyeOff, Lock, CheckCircle, AlertCircle } from 'lucide-react';
  * - Responsive design
  */
 export const ChangePasswordDialog = ({ isOpen, onClose, onSuccess }) => {
+  const { getApiUrl } = useAuth();
   const [formData, setFormData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -79,7 +81,7 @@ export const ChangePasswordDialog = ({ isOpen, onClose, onSuccess }) => {
     }
 
     try {
-      const response = await fetch('/api/auth/change-password', {
+      const response = await fetch(getApiUrl('/api/auth/change-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,8 +94,15 @@ export const ChangePasswordDialog = ({ isOpen, onClose, onSuccess }) => {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Failed to change password');
+        const text = await response.text();
+        let errorMessage = 'Failed to change password';
+        try {
+          const data = JSON.parse(text);
+          errorMessage = data.message || data.error || errorMessage;
+        } catch {
+          errorMessage = text || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
       setSuccess(true);

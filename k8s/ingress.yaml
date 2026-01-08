@@ -79,7 +79,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: securestor.io
+  - host: securestor.local
     http:
       paths:
       - path: /api

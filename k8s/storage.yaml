@@ -5,11 +5,11 @@ metadata:
   namespace: securestor
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce  # Changed from ReadWriteMany for local development
   resources:
     requests:
-      storage: 50Gi
-  storageClassName: nfs-storage  # Change based on your cluster's storage class
+      storage: 10Gi  # Reduced size for local development
+  storageClassName: standard  # Changed from nfs-storage for minikube
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

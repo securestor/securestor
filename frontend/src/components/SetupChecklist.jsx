@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Circle, AlertCircle, ChevronRight, ExternalLink } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * SetupChecklist - Shows initial setup tasks that need to be completed
@@ -9,11 +10,12 @@ export const SetupChecklist = () => {
   const [setupStatus, setSetupStatus] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isHidden, setIsHidden] = useState(false);
+  const { getApiUrl } = useAuth();
 
   useEffect(() => {
     const checkSetupStatus = async () => {
       try {
-        const response = await fetch('/api/v1/setup/status', {
+        const response = await fetch(getApiUrl('/api/v1/setup/status'), {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
           }

@@ -7,7 +7,6 @@ import { ToastProvider } from './context/ToastContext';
 import { DashboardLayout } from './layouts/DashboardLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 import InviteAcceptance from './components/InviteAcceptance';
-import TenantSwitcher from './components/TenantSwitcher';
 import TenantGuard from './components/TenantGuard';
 import './i18n'; // Initialize i18n
 
@@ -57,9 +56,6 @@ export default function App() {
                     } 
                   />
                 </Routes>
-                
-                {/* Tenant Switcher - Only visible in dev mode */}
-                <TenantSwitcher />
               </ToastProvider>
             </TenantProvider>
           </AuthProvider>

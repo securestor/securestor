@@ -13,24 +13,18 @@ export const DefaultPasswordWarning = () => {
     sessionStorage.getItem('default-password-warning-dismissed') === 'true'
   );
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
-  const { user } = useAuth();
+  const { user, getApiUrl } = useAuth();
 
   useEffect(() => {
     // Check if user is using default credentials
     const checkDefaultPassword = async () => {
-      console.log('[DefaultPasswordWarning] Checking default password...');
-      console.log('[DefaultPasswordWarning] User:', user);
-      console.log('[DefaultPasswordWarning] Token:', localStorage.getItem('auth_token'));
-      
       try {
         const token = localStorage.getItem('auth_token');
         if (!token) {
-          console.log('[DefaultPasswordWarning] No token found');
           return;
         }
 
-        const url = '/api/v1/auth/check-default-password';
-        console.log('[DefaultPasswordWarning] Fetching:', url);
+        const url = getApiUrl('/api/v1/auth/check-default-password');
         
         const response = await fetch(url, {
           headers: {
@@ -39,24 +33,12 @@ export const DefaultPasswordWarning = () => {
           }
         });
         
-        console.log('[DefaultPasswordWarning] Response status:', response.status);
-        console.log('[DefaultPasswordWarning] Response headers:', response.headers);
-        
         if (response.ok) {
-          const text = await response.text();
-          console.log('[DefaultPasswordWarning] Response text:', text);
-          const data = JSON.parse(text);
-          console.log('[DefaultPasswordWarning] Response data:', data);
-          console.log('[DefaultPasswordWarning] isDismissed:', isDismissed);
+          const data = await response.json();
           setIsVisible(data.is_default_password && !isDismissed);
-        } else {
-          console.error('[DefaultPasswordWarning] Response not OK:', response.status);
-          const errorText = await response.text();
-          console.error('[DefaultPasswordWarning] Error response:', errorText);
         }
       } catch (error) {
-        console.error('[DefaultPasswordWarning] Failed to check default password status:', error);
-        console.error('[DefaultPasswordWarning] Error details:', error.message, error.stack);
+        console.error('Failed to check default password status:', error);
       }
     };
 

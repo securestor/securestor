@@ -630,6 +630,7 @@ For commercial licensing and enterprise support, contact: support@securestor.io
 
 ### Deployment Guides
 - **[Docker Compose Deployment](docs/docker-deployment.md)** - Deploy with Docker Compose for development and small-scale production
+- **[Kubernetes Local Setup](docs/kubernetes-local-setup.md)** - Local development with minikube (step-by-step guide)
 - **[Kubernetes Deployment](docs/kubernetes-deployment.md)** - Production-grade Kubernetes deployment with HA
 - **[Production Hardening](docs/production-hardening.md)** - Security hardening and best practices
 
