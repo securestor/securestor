@@ -613,6 +613,8 @@ services:
       dockerfile: Dockerfile
       args:
         - REACT_APP_EDITION=community
+        - REACT_APP_API_URL=http://localhost
+        - REACT_APP_BACKEND_PORT=80
     profiles: ["ha"]
     ports:
       - "3000:3000"
