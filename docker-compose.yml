@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: securestor
       POSTGRES_USER: securestor
-      POSTGRES_PASSWORD: securestor123
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     ports:
       - "5432:5432"
     volumes:
@@ -18,23 +18,27 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    secrets:
+      - postgres_password
 
   redis:
     image: redis:7-alpine
     profiles: ["", "default"]
-    environment:
-      REDIS_PASSWORD: redis123
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: redis-server --requirepass redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    command: >
+      sh -c 'REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      exec redis-server --requirepass "$$REDIS_PASSWORD" --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru'
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password)\" ping"]
       interval: 10s
       timeout: 5s
       retries: 3
     restart: unless-stopped
+    secrets:
+      - redis_password
 
   opa:
     image: openpolicyagent/opa:latest
@@ -68,9 +72,15 @@ services:
       - .env
     environment:
       PORT: 8080
-      DATABASE_URL: postgresql://securestor:securestor123@postgres:5432/securestor?sslmode=disable
-      REDIS_URL: redis://:redis123@redis:6379/0
-      JWT_SECRET: your-secret-key-change-in-production
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: securestor
+      DATABASE_USER: securestor
+      DATABASE_PASSWORD_FILE: /run/secrets/postgres_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
       ENVIRONMENT: development
       STORAGE_PATH: /app/storage
       MAX_FILE_SIZE: 524288000
@@ -95,6 +105,12 @@ services:
       KEY_ROTATION_DAYS: 90
       AWS_KMS_KEY_ID: "alias/securestor-master-key"
       AWS_REGION: us-east-1
+    command: >
+      sh -c 'DB_PASSWORD="$$(cat /run/secrets/postgres_password)" &&
+      REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      export DATABASE_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_HOST}:$${DATABASE_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export REDIS_URL="redis://:$${REDIS_PASSWORD}@$${REDIS_HOST}:$${REDIS_PORT}/0" &&
+      exec ./main'
     ports:
       - "8080:8080"
     volumes:
@@ -114,6 +130,10 @@ services:
       keycloak:
         condition: service_started
     restart: unless-stopped
+    secrets:
+      - postgres_password
+      - redis_password
+      - jwt_secret
 
   # ========== HIGH AVAILABILITY DEPLOYMENT (--profile ha) ==========
   
@@ -164,9 +184,10 @@ services:
     environment:
       POSTGRES_DB: securestor
       POSTGRES_USER: securestor
-      POSTGRES_PASSWORD: securestor123
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_HOST_AUTH_METHOD: md5
       POSTGRES_INITDB_ARGS: "-A md5"
+      REPLICATION_PASSWORD_FILE: /run/secrets/postgres_replication_password
     command: >
       postgres
       -c max_wal_senders=10
@@ -187,6 +208,9 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - postgres_password
+      - postgres_replication_password
 
   # PostgreSQL Standby (for HA)
   postgres-standby:
@@ -195,7 +219,8 @@ services:
     environment:
       POSTGRES_DB: securestor
       POSTGRES_USER: securestor
-      POSTGRES_PASSWORD: securestor123
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      REPLICATION_PASSWORD_FILE: /run/secrets/postgres_replication_password
       PGUSER: securestor
     ports:
       - "5434:5432"
@@ -209,7 +234,7 @@ services:
       bash -c "
       if [ ! -f /var/lib/postgresql/data/PG_VERSION ]; then
         echo 'Initializing standby from primary...';
-        export PGPASSWORD='replication123';
+        export PGPASSWORD=\"$$(cat /run/secrets/postgres_replication_password)\";
         pg_basebackup -h postgres-primary -D /var/lib/postgresql/data -U replication_user -v -P -R --wal-method=stream || exit 1;
         chmod 700 /var/lib/postgresql/data;
         chown -R postgres:postgres /var/lib/postgresql/data;
@@ -217,33 +242,38 @@ services:
       exec docker-entrypoint.sh postgres -c max_wal_senders=10 -c wal_level=replica -c hot_standby=on
       "
     healthcheck:
-      test: ["CMD-SHELL", "PGPASSWORD=securestor123 pg_isready -U securestor -h localhost || exit 1"]
+      test: ["CMD-SHELL", "PGPASSWORD=\"$$(cat /run/secrets/postgres_password)\" pg_isready -U securestor -h localhost || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - postgres_password
+      - postgres_replication_password
 
   # Redis Master (for HA)
   redis-master:
     image: redis:7-alpine
     profiles: ["ha"]
-    environment:
-      REDIS_PASSWORD: redis123
     ports:
       - "6379:6379"
     volumes:
       - redis_master_data:/data
-    command: redis-server --requirepass redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    command: >
+      sh -c 'REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      exec redis-server --requirepass "$$REDIS_PASSWORD" --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0'
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password)\" ping"]
       interval: 10s
       timeout: 5s
       retries: 3
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
 
   # Redis Replicas (for HA)
   redis-replica-1:
@@ -253,17 +283,21 @@ services:
       - "6380:6379"
     volumes:
       - redis_replica_1_data:/data
-    command: redis-server --slaveof redis-master 6379 --requirepass redis123 --masterauth redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    command: >
+      sh -c 'REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      exec redis-server --slaveof redis-master 6379 --requirepass "$$REDIS_PASSWORD" --masterauth "$$REDIS_PASSWORD" --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0'
     depends_on:
       - redis-master
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password)\" ping"]
       interval: 10s
       timeout: 5s
       retries: 3
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
 
   redis-replica-2:
     image: redis:7-alpine
@@ -272,17 +306,21 @@ services:
       - "6381:6379"
     volumes:
       - redis_replica_2_data:/data
-    command: redis-server --slaveof redis-master 6379 --requirepass redis123 --masterauth redis123 --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0
+    command: >
+      sh -c 'REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      exec redis-server --slaveof redis-master 6379 --requirepass "$$REDIS_PASSWORD" --masterauth "$$REDIS_PASSWORD" --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru --bind 0.0.0.0'
     depends_on:
       - redis-master
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password)\" ping"]
       interval: 10s
       timeout: 5s
       retries: 3
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
 
   # Redis Sentinels (for HA)
   redis-sentinel-1:
@@ -305,6 +343,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
+    environment:
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
 
   redis-sentinel-2:
     image: redis:7-alpine
@@ -326,6 +368,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
+    environment:
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
 
   redis-sentinel-3:
     image: redis:7-alpine
@@ -347,6 +393,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - redis_password
+    environment:
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
 
   # API Instances (for HA load balancing)
   api-1:
@@ -359,12 +409,19 @@ services:
     environment:
       PORT: 8080
       INSTANCE_ID: api-1
-      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
-      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
-      REDIS_URL: redis://:redis123@redis-master:6379/0
+      DATABASE_HOST: postgres-primary
+      DATABASE_PORT: 5432
+      DATABASE_REPLICA_HOST: postgres-standby
+      DATABASE_REPLICA_PORT: 5432
+      DATABASE_NAME: securestor
+      DATABASE_USER: securestor
+      DATABASE_PASSWORD_FILE: /run/secrets/postgres_password
+      REDIS_HOST: redis-master
+      REDIS_PORT: 6379
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
       REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
       REDIS_SENTINEL_MASTER: mymaster
-      JWT_SECRET: your-secret-key-change-in-production
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
       ENVIRONMENT: ha
       STORAGE_PATH: /app/storage
       MAX_FILE_SIZE: 524288000
@@ -386,6 +443,13 @@ services:
       KEY_ROTATION_DAYS: 90
       AWS_KMS_KEY_ID: "alias/securestor-master-key"
       AWS_REGION: us-east-1
+    command: >
+      sh -c 'DB_PASSWORD="$$(cat /run/secrets/postgres_password)" &&
+      REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      export DATABASE_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_HOST}:$${DATABASE_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export DATABASE_REPLICA_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_REPLICA_HOST}:$${DATABASE_REPLICA_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export REDIS_URL="redis://:$${REDIS_PASSWORD}@$${REDIS_HOST}:$${REDIS_PORT}/0" &&
+      exec ./main'
     volumes:
       - ./data/node1:/app/storage/node1
       - ./data/node2:/app/storage/node2
@@ -407,6 +471,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - postgres_password
+      - redis_password
+      - jwt_secret
 
   api-2:
     build:
@@ -418,12 +486,19 @@ services:
     environment:
       PORT: 8080
       INSTANCE_ID: api-2
-      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
-      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
-      REDIS_URL: redis://:redis123@redis-master:6379/0
+      DATABASE_HOST: postgres-primary
+      DATABASE_PORT: 5432
+      DATABASE_REPLICA_HOST: postgres-standby
+      DATABASE_REPLICA_PORT: 5432
+      DATABASE_NAME: securestor
+      DATABASE_USER: securestor
+      DATABASE_PASSWORD_FILE: /run/secrets/postgres_password
+      REDIS_HOST: redis-master
+      REDIS_PORT: 6379
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
       REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
       REDIS_SENTINEL_MASTER: mymaster
-      JWT_SECRET: your-secret-key-change-in-production
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
       ENVIRONMENT: ha
       STORAGE_PATH: /app/storage
       MAX_FILE_SIZE: 524288000
@@ -445,6 +520,13 @@ services:
       KEY_ROTATION_DAYS: 90
       AWS_KMS_KEY_ID: "alias/securestor-master-key"
       AWS_REGION: us-east-1
+    command: >
+      sh -c 'DB_PASSWORD="$$(cat /run/secrets/postgres_password)" &&
+      REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      export DATABASE_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_HOST}:$${DATABASE_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export DATABASE_REPLICA_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_REPLICA_HOST}:$${DATABASE_REPLICA_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export REDIS_URL="redis://:$${REDIS_PASSWORD}@$${REDIS_HOST}:$${REDIS_PORT}/0" &&
+      exec ./main'
     volumes:
       - ./data/node1:/app/storage/node1
       - ./data/node2:/app/storage/node2
@@ -466,6 +548,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - postgres_password
+      - redis_password
+      - jwt_secret
 
   api-3:
     build:
@@ -477,12 +563,19 @@ services:
     environment:
       PORT: 8080
       INSTANCE_ID: api-3
-      DATABASE_URL: postgresql://securestor:securestor123@postgres-primary:5432/securestor?sslmode=disable
-      DATABASE_REPLICA_URL: postgresql://securestor:securestor123@postgres-standby:5434/securestor?sslmode=disable
-      REDIS_URL: redis://:redis123@redis-master:6379/0
+      DATABASE_HOST: postgres-primary
+      DATABASE_PORT: 5432
+      DATABASE_REPLICA_HOST: postgres-standby
+      DATABASE_REPLICA_PORT: 5432
+      DATABASE_NAME: securestor
+      DATABASE_USER: securestor
+      DATABASE_PASSWORD_FILE: /run/secrets/postgres_password
+      REDIS_HOST: redis-master
+      REDIS_PORT: 6379
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
       REDIS_SENTINEL_URL: redis-sentinel-1:26379,redis-sentinel-2:26379,redis-sentinel-3:26379
       REDIS_SENTINEL_MASTER: mymaster
-      JWT_SECRET: your-secret-key-change-in-production
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
       ENVIRONMENT: ha
       STORAGE_PATH: /app/storage
       MAX_FILE_SIZE: 524288000
@@ -504,6 +597,13 @@ services:
       KEY_ROTATION_DAYS: 90
       AWS_KMS_KEY_ID: "alias/securestor-master-key"
       AWS_REGION: us-east-1
+    command: >
+      sh -c 'DB_PASSWORD="$$(cat /run/secrets/postgres_password)" &&
+      REDIS_PASSWORD="$$(cat /run/secrets/redis_password)" &&
+      export DATABASE_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_HOST}:$${DATABASE_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export DATABASE_REPLICA_URL="postgresql://$${DATABASE_USER}:$${DB_PASSWORD}@$${DATABASE_REPLICA_HOST}:$${DATABASE_REPLICA_PORT}/$${DATABASE_NAME}?sslmode=disable" &&
+      export REDIS_URL="redis://:$${REDIS_PASSWORD}@$${REDIS_HOST}:$${REDIS_PORT}/0" &&
+      exec ./main'
     volumes:
       - ./data/node1:/app/storage/node1
       - ./data/node2:/app/storage/node2
@@ -525,6 +625,10 @@ services:
     restart: unless-stopped
     networks:
       - securestor
+    secrets:
+      - postgres_password
+      - redis_password
+      - jwt_secret
 
   # Nginx Load Balancer (for HA)
   nginx-lb:
@@ -579,13 +683,13 @@ services:
     profiles: ["", "default", "ha"]
     environment:
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin123
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set KEYCLOAK_ADMIN_PASSWORD in .env or environment}
       KC_DB: postgres
       KC_DB_URL_HOST: keycloak-db
       KC_DB_URL_DATABASE: keycloak
       KC_DB_URL_PORT: 5432
       KC_DB_USERNAME: keycloak
-      KC_DB_PASSWORD: keycloak123
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?set KEYCLOAK_DB_PASSWORD in .env or environment}
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_HTTP_ENABLED: "true"
@@ -599,7 +703,10 @@ services:
     depends_on:
       keycloak-db:
         condition: service_healthy
-    command: ["start-dev", "--db=postgres", "--import-realm"]
+    command:
+      - "start-dev"
+      - "--db=postgres"
+      - "--import-realm"
     healthcheck:
       test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080 || exit 1"]
       interval: 30s
@@ -640,7 +747,7 @@ services:
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: keycloak123
+      POSTGRES_PASSWORD_FILE: /run/secrets/keycloak_db_password
     ports:
       - "5433:5432"
     volumes:
@@ -651,6 +758,8 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    secrets:
+      - keycloak_db_password
 
 volumes:
   postgres_data:
@@ -678,6 +787,18 @@ volumes:
   redis_sentinel_2_logs:
   redis_sentinel_3_data:
   redis_sentinel_3_logs:
+
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password
+  postgres_replication_password:
+    file: ./secrets/postgres_replication_password
+  redis_password:
+    file: ./secrets/redis_password
+  jwt_secret:
+    file: ./secrets/jwt_secret
+  keycloak_db_password:
+    file: ./secrets/keycloak_db_password
 
 networks:
   securestor:

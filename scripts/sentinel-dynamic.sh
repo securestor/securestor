@@ -3,6 +3,15 @@
 # Dynamic Redis Sentinel startup script
 echo "Starting Redis Sentinel with dynamic Redis master discovery..."
 
+REDIS_AUTH_PASSWORD="${REDIS_PASSWORD:-}"
+if [ -n "${REDIS_PASSWORD_FILE:-}" ] && [ -f "${REDIS_PASSWORD_FILE}" ]; then
+    REDIS_AUTH_PASSWORD=$(cat "${REDIS_PASSWORD_FILE}")
+fi
+
+if [ -z "$REDIS_AUTH_PASSWORD" ]; then
+    REDIS_AUTH_PASSWORD="redis123"
+fi
+
 # Wait for Redis master connectivity and get its IP
 MAX_RETRIES=30
 RETRY_COUNT=0
@@ -47,7 +56,7 @@ bind 0.0.0.0
 sentinel monitor mymaster $REDIS_MASTER_IP 6379 2
 
 # Authentication for connecting to Redis master and replicas
-sentinel auth-pass mymaster redis123
+sentinel auth-pass mymaster $REDIS_AUTH_PASSWORD
 
 # Down after this many milliseconds without a response
 sentinel down-after-milliseconds mymaster 5000

@@ -6,6 +6,15 @@ set -e
 
 echo "Setting up PostgreSQL primary for replication..."
 
+REPLICATION_PASSWORD="${REPLICATION_PASSWORD:-}"
+if [ -n "${REPLICATION_PASSWORD_FILE:-}" ] && [ -f "${REPLICATION_PASSWORD_FILE}" ]; then
+    REPLICATION_PASSWORD=$(cat "${REPLICATION_PASSWORD_FILE}")
+fi
+
+if [ -z "$REPLICATION_PASSWORD" ]; then
+    REPLICATION_PASSWORD="replication123"
+fi
+
 # Update pg_hba.conf BEFORE PostgreSQL starts (in initdb phase)
 # This ensures replication connections are allowed from the start
 PGDATA=${PGDATA:-/var/lib/postgresql/data}
@@ -29,7 +38,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     DO \$\$
     BEGIN
         IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'replication_user') THEN
-            CREATE USER replication_user WITH ENCRYPTED PASSWORD 'replication123' REPLICATION;
+            CREATE USER replication_user WITH ENCRYPTED PASSWORD '${REPLICATION_PASSWORD}' REPLICATION;
             RAISE NOTICE 'Created replication_user';
         ELSE
             RAISE NOTICE 'replication_user already exists';

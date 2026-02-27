@@ -22,6 +22,12 @@ data/
 .env.test.local
 .env.production.local
 
+# local secrets
+.env
+secrets/*
+!secrets/.gitkeep
+!secrets/*.example
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

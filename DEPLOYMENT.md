@@ -218,14 +218,9 @@ docker-compose up -d
 Both modes support the same environment variables. Create a `.env` file:
 
 ```env
-# Database
-DATABASE_URL=postgresql://securestor:securestor123@postgres:5432/securestor?sslmode=disable
-
-# Redis
-REDIS_URL=redis://:redis123@redis:6379/0
-
-# Security
-JWT_SECRET=your-secret-key-change-in-production
+# Keycloak (required)
+KEYCLOAK_ADMIN_PASSWORD=change_me_strong_admin_password
+KEYCLOAK_DB_PASSWORD=change_me_strong_db_password
 
 # Storage
 STORAGE_PATH=/app/storage
@@ -239,6 +234,25 @@ SCANNER_TIMEOUT=600
 OPA_URL=http://opa:8181
 OPA_ENABLED=true
 ```
+
+### Docker Secrets (Recommended)
+
+Generate local secret files before starting services:
+
+```bash
+./scripts/bootstrap_secrets.sh
+```
+
+This creates:
+
+- `secrets/postgres_password`
+- `secrets/postgres_replication_password`
+- `secrets/redis_password`
+- `secrets/jwt_secret`
+- `secrets/keycloak_db_password`
+
+Compose mounts these as Docker secrets at runtime under `/run/secrets/*`.
+The API resolves `JWT_SECRET_FILE`, and database/redis URLs are assembled at container startup from mounted secrets.
 
 ---
 

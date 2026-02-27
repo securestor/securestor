@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/joho/godotenv"
@@ -102,6 +104,10 @@ func isDevelopment() bool {
 func GetEnvWithFallback(key, fallback string) string {
 	LoadEnvOnce() // Ensure env is loaded
 
+	if value, ok := getEnvValueFromFile(key); ok {
+		return value
+	}
+
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
@@ -111,6 +117,10 @@ func GetEnvWithFallback(key, fallback string) string {
 // MustGetEnv gets an environment variable or panics if not found
 func MustGetEnv(key string) string {
 	LoadEnvOnce() // Ensure env is loaded
+
+	if value, ok := getEnvValueFromFile(key); ok {
+		return value
+	}
 
 	value := os.Getenv(key)
 	if value == "" {
@@ -123,6 +133,10 @@ func MustGetEnv(key string) string {
 func GetEnvBool(key string, fallback bool) bool {
 	LoadEnvOnce()
 
+	if value, ok := getEnvValueFromFile(key); ok {
+		return value == "true" || value == "1" || value == "yes" || value == "on"
+	}
+
 	value := os.Getenv(key)
 	if value == "" {
 		return fallback
@@ -134,4 +148,25 @@ func GetEnvBool(key string, fallback bool) bool {
 // IsEnvLoaded returns whether the environment has been loaded
 func IsEnvLoaded() bool {
 	return envLoaded
+}
+
+func getEnvValueFromFile(key string) (string, bool) {
+	filePath := os.Getenv(fmt.Sprintf("%s_FILE", key))
+	if filePath == "" {
+		return "", false
+	}
+
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		log.Printf("Warning: unable to read secret file for %s: %v", key, err)
+		return "", false
+	}
+
+	value := strings.TrimSpace(string(content))
+	if value == "" {
+		log.Printf("Warning: secret file for %s is empty: %s", key, filePath)
+		return "", false
+	}
+
+	return value, true
 }
